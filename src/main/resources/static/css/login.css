@@ -1,0 +1,154 @@
+html,body{
+    width: 100%;
+    height: 100%;
+    background: url(../img/bg2.jpg);
+    background-size: cover;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    position: relative;
+ }
+.container,.container-fluid{
+    padding: 0!important;
+    margin: 0!important;
+}
+.loginOut{
+    position: absolute;
+    width: 30%;
+    height: auto;
+    left: 50%;
+    margin-left: -15%!important;
+    top: 10%;
+}
+.login-logo{
+    background: url(../img/login-logo.png)no-repeat;
+    height: 120px;
+    background-size: contain;
+    background-position: 64% 50%;
+    display: block;
+}
+.login-top{
+    width: 100%;
+    height: 75%;
+}
+.login-top-left, .login-top-right{
+    height: 100%;
+}
+.login-bottom{
+    position: absolute;
+    padding-top: 20px;
+    bottom: 0px;
+    width: 100%;
+    height: 25%;
+    /*background: #004287;*/
+    color: rgba(255,255,255,.6);
+}
+.loginArea{
+    margin-top: 58px;
+    padding: 10px;
+    background: rgba(255,255,255,.2);
+    border-radius: 4px;
+    border:1px solid rgba(210, 210, 210, 0.82);
+    box-shadow: 0 0 6px 0 #000;
+}
+.login-top-right > form{
+    height: 60%;
+    margin-top: 30%;
+    max-width: 500px;
+}
+.loginArea > .title{
+    color: #2265a3;
+    font-size: 18px;
+    text-align: center;
+    margin-top: 10%;
+}
+.loginArea-part{
+    height: 50px;
+    border-radius: 10px;
+    margin: 20px;
+    font-size: 18px;
+}
+.loginArea-title{
+    font-size: 30px;
+    text-align: center;
+    color: #ffffff;
+}
+.set{
+    text-indent: 2em;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border: 1px solid #d0d0d0;
+    border-radius: 10px;
+    outline: none;
+}
+.remPw{
+    color: #000;
+    font-size: 14px;
+}
+.mTop{
+    margin-top: 20px;
+}
+.mTop p{
+    margin: 0 0 5px!important;
+}
+.go{
+    width: 100%;
+    height: 100%;
+    background-color: #2c80d4;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 18px;
+}
+.login-bottom{
+    padding-top: 2%;
+    font-size: 12px;
+}
+
+@media screen and (max-width: 375px) {
+    html,body{
+        width: 100%;
+        height: 100%;
+        background: url(../img/11111.jpg);
+        background-size: cover;
+        overflow: inherit;
+        background-repeat: no-repeat;
+        position: relative;
+    }
+    .loginOut{
+        position: absolute;
+        width: 30%;
+        height: auto;
+        left: 50%;
+        margin-left: -15%!important;
+        top: 18%;
+    }
+    .login-logo{
+        background: url(../img/login-logo.png)no-repeat;
+        width: 100%;
+        height: 200px;
+        background-size: contain;
+    }
+    .login-top-right > form{
+        margin-top:0;
+    }
+    .login-top{
+        padding-bottom: 15px!important;
+    }
+    .login-bottom {
+        position: absolute;
+        width: 100%;
+        height: 70%;
+        top: 520px;
+        /*background: #004287;*/
+        color: rgba(255,255,255,.6);
+    }
+    .loginOut{
+        position: absolute;
+        width: 90%;
+        height: auto;
+        left: 50%;
+        margin-left: -45%!important;
+        top: 100px;
+    }
+}

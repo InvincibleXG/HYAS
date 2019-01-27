@@ -1,0 +1,114 @@
+html {
+  height: 100%;
+  width: 99%;
+  margin: 0;
+}
+body {
+    height: 100%;
+  width: 100%;
+  margin: 0;
+}
+.aside-menu {
+    height: 95%;
+    position: fixed;
+    left:0;
+    user-select: none;
+    list-style: none;
+    background: #eee;
+}
+.aside-menu::-webkit-scrollbar {
+  width: 0px;
+}
+.aside-menu li.active {
+  height: auto !important;
+  color: #2064ab;
+}
+.aside-menu .active  {
+  /*height: 150px;*/
+  margin-left: -20px;
+  background-color: #e9e9e9;
+  box-shadow: 0 4px 15px -9px rgba(0,0,0,0.5) inset;
+}
+.aside-menu .active .dropdown-inner {
+  box-shadow: 2px -4px 15px -10px rgba(0,0,0,0.5) inset;
+}
+.aside-menu .active{
+  display: block;
+  opacity: 1;
+  visibility: visible;
+  /*height: 75px;*/
+  /*transition: opacity 0s;*/
+  /*transition: height 0.2px;*/
+}
+.aside-menu>li {
+    width: 100%;
+    color: #424242;
+    font-weight: 100;
+    padding-left: 22px;
+}
+.aside-menu span {
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 16px;
+    font-family: "Helvetica";
+}
+.aside-menu .dropdown {
+    list-style: none;
+    width: 100%;
+    font-size: 12px;
+    margin-top: -10px;
+    margin-left: -8%;
+    padding-left: 20%;
+    background: #e8e8e8;
+    box-shadow:-13px 0 10px -4px inset;
+
+}
+.aside-menu .dropdown>li {
+    width: 100%;
+    line-height: 48px;
+    height: 50px;
+    color: #424242;
+    font-weight: 100;
+    cursor: pointer;
+}
+.aside-menu .dropdown a {
+    color:inherit;
+}
+.aside-menu .dropdown a:hover {
+    text-decoration: none;
+}
+.aside-menu>li .blue-block {
+  position: absolute;
+  padding: 0px;
+  display: inline-block;
+  left: 0;
+  margin-left: 0;
+  width: 6px;
+  height: 75px;
+  transition: all .2s;
+}
+.aside-menu>li .aside-menu-icon {
+  margin-right: 20px;
+  font-size: 20px;
+  line-height: 80px; /*撑起padding-top*/
+}
+.aside-menu .dropdown>li .aside-menu-icon{
+    margin-right: 20px;
+    font-size: 18px;
+    line-height: 50px;
+}
+.aside-menu>li:hover {
+  color: #2064ab;
+}
+.aside-menu>li:hover > .blue-block {
+  background: #2064ab;
+}
+.aside-menu>li.active > .blue-block {
+  background: #2064ab;
+}
+.onon>span{
+    color: #2064ab!important;
+}
+.onon>i{
+    background: #2167ad!important;
+}

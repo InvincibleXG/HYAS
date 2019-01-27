@@ -1,0 +1,59 @@
+
+.resources{
+    padding: 0;
+}
+table{
+    text-align: center;
+    cursor: default;
+    user-select: none;
+    background: #fff;
+}
+table tr{
+    margin: 10px;
+    transition: all .1s;
+}
+table tr th,
+table tr td {
+    text-align: center;
+    padding: 100px;
+}
+table tr td {
+    cursor: pointer;
+}
+/*.table-striped > tbody > tr:nth-of-type(odd) {*/
+    /*background-color: #f3f3f3;*/
+/*}*/
+.table-hover > tbody > tr:hover {
+    color: #fff;
+    background-color: #2167ad;
+}
+.has-sub {
+    font-size: 12px;
+    line-height: 24px;
+    cursor: pointer;
+    width: 12px;
+}
+.no-sub {
+    font-size: 12px;
+    line-height: 24px;
+    cursor: pointer;
+    width: 12px;
+}
+.son {
+    display: none;
+    background-color: #ebebeb;
+}
+
+.remark{
+    line-height: 24px;
+    padding:  0 30px;
+}
+
+
+
+.modal-body .row{
+    padding: 10px 0;
+}
+.resourceDetail{
+    font-weight: 400;
+}

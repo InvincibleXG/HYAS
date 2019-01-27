@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xg.hyas.mapper.AttendanceMapper" >
+  <resultMap id="BaseResultMap" type="com.xg.hyas.entity.Attendance" >
+    <id column="guid" property="guid" jdbcType="VARCHAR" />
+    <result column="user" property="user" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="login_time" property="loginTime" jdbcType="VARCHAR" />
+    <result column="logout_time" property="logoutTime" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="VARCHAR" />
+    <result column="is_valid" property="isValid" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    guid, user, type, login_time, logout_time, creator, create_date, is_valid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from table_attendance
+    where guid = #{guid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from table_attendance
+    where guid = #{guid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.xg.hyas.entity.Attendance" >
+    insert into table_attendance (guid, user, type, 
+      login_time, logout_time, creator, 
+      create_date, is_valid)
+    values (#{guid,jdbcType=VARCHAR}, #{user,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{loginTime,jdbcType=VARCHAR}, #{logoutTime,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=VARCHAR}, #{isValid,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xg.hyas.entity.Attendance" >
+    insert into table_attendance
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="guid != null" >
+        guid,
+      </if>
+      <if test="user != null" >
+        user,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="loginTime != null" >
+        login_time,
+      </if>
+      <if test="logoutTime != null" >
+        logout_time,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="isValid != null" >
+        is_valid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="guid != null" >
+        #{guid,jdbcType=VARCHAR},
+      </if>
+      <if test="user != null" >
+        #{user,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="loginTime != null" >
+        #{loginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="logoutTime != null" >
+        #{logoutTime,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="isValid != null" >
+        #{isValid,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xg.hyas.entity.Attendance" >
+    update table_attendance
+    <set >
+      <if test="user != null" >
+        user = #{user,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="loginTime != null" >
+        login_time = #{loginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="logoutTime != null" >
+        logout_time = #{logoutTime,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="isValid != null" >
+        is_valid = #{isValid,jdbcType=BIT},
+      </if>
+    </set>
+    where guid = #{guid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xg.hyas.entity.Attendance" >
+    update table_attendance
+    set user = #{user,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      login_time = #{loginTime,jdbcType=VARCHAR},
+      logout_time = #{logoutTime,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=VARCHAR},
+      is_valid = #{isValid,jdbcType=BIT}
+    where guid = #{guid,jdbcType=VARCHAR}
+  </update>
+</mapper>

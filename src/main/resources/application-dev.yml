@@ -1,0 +1,23 @@
+server:
+    port: 8000
+    servlet:
+      context-path: /HYAS
+spring:
+#    servlet:
+#          multipart:
+#            location: C:\Users\think\Desktop\虚拟路径\
+    datasource:
+        name: hyas
+        url: jdbc:mysql://127.0.0.1:3306/hyas?serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull&useSSL=false&useUnicode=true&characterEncoding=utf8
+        username: root
+        password: root
+        driver-class-name: com.mysql.cj.jdbc.Driver
+    devtools:
+        restart:
+            enabled: true
+#mybatis:
+#    configuration:
+#        log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+const:
+    uploadPath: C:/HY_AS_Upload/
+    defaultPassword: huayun123

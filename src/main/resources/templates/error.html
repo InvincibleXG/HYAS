@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/nps.css">
+    <link rel="stylesheet" href="../css/task.css">
+    <title>Error</title>
+</head>
+<body>
+    <script>
+        function go()
+        {
+            if(self != top) {
+            　　window.parent.location.href="/index";
+            }else{
+                location.href="/index";
+            }
+        }
+    </script>
+    <h1 align="center">用户状态错误</h1>
+    <h3 align="center">您的页面渲染失败，可能是由于登录验证失效导致的，请点击下面的按钮重新登录！</h3>
+    <h3 align="center">Windows用户请关闭客户端重新启动！</h3>
+    <h2 align="center"><button class="btn btn-warning xg_but" onclick="go()">重新登录</button></h2>
+
+</body>
+</html>

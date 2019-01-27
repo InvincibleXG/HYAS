@@ -1,0 +1,49 @@
+#print>.container-fluid{
+  height: 100%;
+  padding: 0;
+}
+*::-webkit-scrollbar{
+  width: 0;
+}
+.board {
+  /*margin-top: -2px;*/
+  margin-left: 200px;
+  height: 100%;
+}
+@media (max-width: 767px) {
+  .board {
+    margin-left: 0;
+  }
+  .info-detail {
+    margin-top: 33px;
+  }
+}
+.gantt {
+  height: 100%;
+  overflow: scroll;
+}
+.board-line {
+  width: 100%;
+  height: 20px;
+  background: #2167ad;
+  color: #fff;
+  line-height: 18px;
+  font-size: 12px;
+}
+.board-line .board-line-next {
+  font-size: 4px;
+}
+.info-detail {
+  overflow: scroll;
+}
+.info-detail div {
+  line-height: 30px;
+}
+.info-detail-col > div:nth-of-type(2n),
+.info-detail-col > div:nth-of-type(2n-1) {
+  background: #F0F1F2;
+}
+
+.modalPopup {
+  z-index: 10000;
+}

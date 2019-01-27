@@ -1,0 +1,114 @@
+body {
+  font-family: "Helvetica";
+  font-weight: 100;
+}
+nav {
+  background: #2167ad;
+  color: #fff;
+  font-size: 26px;
+  font-family: "Helvetica";
+  z-index: 1000;
+  font-weight: 100 !important;
+}
+nav li {
+  font-weight: 100 !important;
+}
+#bs-example-navbar-collapse-1::-webkit-scrollbar{
+  width: 0;
+}
+.navbar.navbar-default.navbar-fixed-top {
+  z-index: 1001;
+}
+nav .projectName {
+  text-align: center;
+}
+nav .search {
+  background: #fff;
+  border-radius: 40px;
+  overflow: hidden;
+  top: 20px;
+  margin-right: 15px;
+  margin-left: 15px;
+  margin-bottom: 12px;
+}
+nav .search .searchArea {
+  background: #fff;
+  outline: none;
+  border: none;
+  height: 30px;
+  font-size: 14px;
+  width: 80%;
+  color: #000;
+}
+nav .userName {
+  font-size: 16px;
+}
+nav .userName i {
+  cursor: pointer;
+}
+.dropdown-toggle {
+  font-weight: 100;
+}
+nav .userName .userNameMenu {
+  margin-top: -1px;
+  background: #23527c;
+  display: none;
+}
+nav .userName .userNameMenu li {
+  list-style: none;
+  width: 100%;
+  margin: 0;
+  cursor: pointer;
+  text-align: center;
+  line-height: 40px;
+  height: 40px;
+}
+nav .userName .userNameMenu li:hover {
+  background: #337ab7;
+}
+nav .setting {
+  cursor: pointer;
+}
+nav .dropdown-menu > li > a:hover,
+nav .dropdown-menu > li > a:focus {
+  color: #2167ad;
+  background: none;
+}
+.nav .dropdown.open > a,
+.nav .dropdown.open > a:hover,
+.nav .dropdown.open > a:focus {
+  background-color: #eee;
+  border-color: #337ab7;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: #2167ad !important;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+  color: inherit !important;
+  background-color: inherit !important;
+}
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #fff;
+  }
+}
+.aside-menu-m{
+
+}
+.aside-menu-m li{
+  font-weight: 200;
+  font-size: 16px;
+  line-height: 47px;
+  text-align: center;
+  color: #fff;
+}
+.navbar-nav{
+  margin:  0 -15px;
+}
+.navbar-brand > .iconfont {
+  transform: rotate(-90deg);
+  display: inline-block;
+}

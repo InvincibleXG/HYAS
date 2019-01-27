@@ -1,0 +1,73 @@
+html,body{
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+ul,li{
+	list-style: none;
+	padding-left: 24px;
+	margin: 4px 0;
+}
+.treebox{
+	width: 100%;
+	overflow: scroll;
+}
+.ontree{
+	background-color: #2669AB;
+	padding: 5px 3px;
+	color: white !important;
+}
+.tree a{
+	color: #646464;
+	border-radius: 4px;
+	height: 24px;
+	line-height: 24px;
+	font-size: 14px;
+	padding: 5px 3px;
+	overflow: hidden;
+	transition: all .3s;
+}
+.tree a:hover{
+	color: #2669AB;
+	cursor: pointer;
+}
+.tree ul{
+	padding-left: 20px;
+	margin-top: 4px;
+}
+.close_menu,.open_menu{
+	overflow: hidden;
+}
+.close_menu span,.open_menu span{
+	width: 24px;
+	height: 24px;
+	display: block;
+	float: left;
+	cursor: pointer;
+	opacity: 0.5;
+}
+.close_menu span{
+	background: url(../img/close.png) no-repeat center;
+	background-size: 70%;
+	transition: all .3s;
+}
+.open_menu span{
+	background: url(../img/open.png) no-repeat center;
+	background-size: 70%;
+	transition: all .3s;
+}
+.close_menu span:hover,.open_menu span:hover{
+	opacity: 1;
+}
+.outOut{
+    width: 45%;
+    height: 100%;
+    border: 1px solid #2669AB;
+    padding: 20px;
+    border-radius: 4px;
+    overflow: scroll;
+}
+.grrr{
+    padding-left: 4px;
+    padding-right: 4px;
+}

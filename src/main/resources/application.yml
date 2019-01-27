@@ -1,0 +1,21 @@
+spring:
+    profiles:
+        active: dev
+    servlet:
+          multipart:
+              maxFileSize: 10MB
+              maxRequestSize: 20MB
+    resources:
+        static-locations: classpath:/
+#        ,files:${spring.http.multipart.location}
+    thymeleaf:
+        prefix: classpath:/templates/
+#        suffix: .html
+        mode: HTML
+        encoding: UTF-8
+        cache: false
+mybatis:
+    mapper-locations: classpath:mapper/*.xml
+    type-aliases-package: com.xg.hyas.entity
+logging:
+    file: HYAS.log

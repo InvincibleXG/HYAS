@@ -1,0 +1,156 @@
+.risk{
+    padding: 0;
+}
+table{
+    text-align: center;
+    cursor: default;
+    user-select: none;
+}
+table tr{
+    margin: 10px;
+    transition: all .1s;
+}
+table tr th,
+table tr td {
+    text-align: center;
+    padding: 100px;
+}
+table tr td {
+    cursor: pointer;
+}
+/*.table-striped > tbody > tr:nth-of-type(odd) {*/
+/*background-color: #f3f3f3;*/
+/*}*/
+.table-hover > tbody > tr:hover {
+    color: #fff;
+    background-color: #2167ad;
+}
+.has-sub {
+    font-size: 12px;
+    line-height: 24px;
+    cursor: pointer;
+    width: 12px;
+}
+.no-sub {
+    font-size: 12px;
+    line-height: 24px;
+    cursor: pointer;
+    width: 12px;
+}
+.son {
+    display: none;
+    background-color: #ebebeb;
+}
+
+
+
+
+
+.modal-body .row{
+    padding: 10px 0;
+}
+
+/*table tr th:first-of-type,*/
+/*table tr td:first-of-type {*/
+/*max-width: 10px;*/
+
+/*}*/
+
+.lv1{
+    color: #3bcf59;
+    font-size: 20px;
+}
+.lv2{
+    color: #edd31c;
+    font-size: 20px;
+}
+.lv3{
+    color: #eb6961;
+    font-size: 20px;
+}
+.risk{
+    padding-right: 10px;
+}
+.risk textArea{
+    padding: 10px;
+    border: #d8d8d8 solid 1px;
+    width: 100%;
+    resize: vertical;
+}
+.risk .row input{
+    float: left;
+}
+.risk .row span{
+    font-weight: 100;
+    line-height: 22px;
+    float: left;
+    margin-left: 10px;
+}
+.riskOut{
+    line-height: 40px;
+}
+
+
+.regular-radio {
+    display: none;
+}
+
+.regular-radio + label {
+    -webkit-appearance: none;
+    background-color: #fafafa;
+    border: 1px solid #cacece;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+    padding: 9px;
+    border-radius: 50px;
+    display: inline-block;
+    position: relative;
+    margin-top: 11px;
+    float: left;
+    margin-right: 9px;
+}
+
+.regular-radio:checked + label:after {
+    content: ' ';
+    width: 14px;
+    height: 14px;
+    border-radius: 50px;
+    position: absolute;
+    top: 2px;
+    background: #99a1a7;
+    box-shadow: inset 0px 0px 4px rgba(0,0,0,0.3);
+    text-shadow: 0px;
+    left: 2px;
+    font-size: 32px;
+}
+
+.regular-radio:checked + label {
+    background-color: #e9ecee;
+    color: #99a1a7;
+    border: 1px solid #adb8c0;
+}
+
+.regular-radio + label:active, .regular-radio:checked + label:active {
+    box-shadow: 0 1px 2px rgba(0,0,0,0.5), inset 0px 1px 3px rgba(0,0,0,0.1);
+}
+.dotV1 .regular-radio:checked + label:after {
+    background: #3bcf59;
+}
+.dotV2 .regular-radio:checked + label:after {
+    background: #edd31c;
+}
+.dotV3 .regular-radio:checked + label:after {
+    background: #eb6961;
+}
+.form-text{
+    padding: 0;
+    line-height: 30px;
+    /*font-weight: 100;*/
+}
+.modal-body{
+    overflow: hidden;
+}
+.submitBtn{
+    background: #2167ad;
+    padding: 5px;
+    color: #fff;
+}

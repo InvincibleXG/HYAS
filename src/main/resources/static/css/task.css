@@ -1,0 +1,237 @@
+.task-type-title {
+    font-size: 25px;
+}
+.nps_label {
+    text-align: right !important;
+}
+.nps_task{
+    border:1px solid #ccc;
+    border-radius: 4px;
+    padding-top:15px;
+    padding-bottom: 40px;
+    margin-bottom: 20px;
+    transition: all .5s;
+}
+.nps_task_hidden{
+    height: 0;
+    padding-top:15px;
+    overflow: hidden;
+    transition: all .5s;
+}
+.closeTag{
+    position:absolute;
+    top:0;
+    right:-20px;
+    height: 20px;
+    width:20px;
+    color:#2567ab;
+    font-size:20px ;
+    transform: rotateZ(180deg);
+    transition: all .2s;
+    cursor: pointer;
+    user-select: none;
+    z-index: 999;
+}
+.openTag{
+    transform: rotateZ(0deg);
+}
+.nps_task_info{
+    padding-bottom: 20px;
+}
+.nps_task_label{
+
+    padding-left:0;
+    padding-right:0;
+    font-size: 14px;
+    font-weight: 300;
+    text-align: right;
+}
+.form-horizontal .row {
+    margin-left: 0;
+    margin-right: 0;
+}
+.flow{
+    width:100%;
+}
+.flowchart-block {
+    display: block;
+    width: 12.28%;
+}
+.flowchart-text {
+    border-bottom: 2px solid #b5b5b5;
+    font-size: small;
+    text-align: center;
+    width: 85%;
+    height: 50px;
+    line-height: 50px;
+}
+.flowchart-dash {
+    width: 15%;
+    /* margin-left: 2.5%;
+    margin-right: 2.5%; */
+    /* height: 20px;
+    border-radius: 50%;
+    background-color: #b5b5b5; */
+}
+.flowchart-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #b5b5b5;
+    /* margin-left: 10px; */
+    position: relative;
+    top: 40px;
+}
+.flowchart-text.pass {
+    border-bottom: 2px solid #2567ab;
+}
+.flowchart-circle.pass {
+    background-color: #2567ab;
+}
+.flowchart-text.wait {
+    border-bottom: 2px solid #ffc108;
+}
+.flowchart-circle.wait {
+    background-color: #ffc108;
+}
+.flowchart-text.cancel {
+    border-bottom: 2px solid #927a6d;
+}
+.flowchart-circle.cancel {
+    background-color: #927a6d;
+}
+.flowchart-text.upcoming {
+    border-bottom: 2px solid #b5b5b5;
+}
+.flowchart-circle.upcoming {
+    background-color: #b5b5b5;
+}
+
+.nps_but {
+    background-image: none;
+    background-color: #b5b5b5;
+    border: none;
+    width: 11.9%;
+}
+.nps_but.btn-success{
+    background-color: #5cb85c
+}
+.nps_but.btn-warning{
+    background-color: #f0ad4e
+}
+
+.nps_but:hover,
+.nps_but:active,
+.nps_but:focus,
+.nps_but:visited {
+    background-color: #b5b5b5!important;
+}
+.nps_but.active,
+.nps_but.save {
+    background-color: #2567ab;
+}
+.nps_but.active:hover,
+.nps_but.save:hover{
+    background-color: #3f8cdc!important;
+}
+.btn-danger:hover,
+.btn-danger:focus {
+  background-color: #c12e2a!important;
+  background-position: 0 -15px!important;
+}
+.save:focus,
+.save:visited{
+    background-color: #2567ab!important;
+}
+.nps_but.cancel {
+    background-color: #927a6d;
+}
+.invisible{
+    display: none;
+}
+
+.xg_but {
+    background-image: none;
+    background-color: #b5b5b5;
+    border: none;
+}
+.xg_but.btn-success{
+    background-color: #5cb85c
+}
+.xg_but.btn-warning{
+    background-color: #2167ad;
+}
+.xg_but:hover {
+    background-color: #3f8cdc;
+}
+.xg_but.active {
+    background-color: #2567ab;
+}
+.xg_but.cancel {
+    background-color: #927a6d;
+}
+.invisible{
+    display: none;
+}
+span{
+    -webkit-user-select: none;
+}
+.onUse{
+    color:#fff;
+    background-color:#fff;
+    text-shadow:none;
+    border:none;
+    outline:none;
+    box-shadow:none;
+    -webkit-user-select: none;
+    user-select: none;
+    height: 26px;
+    line-height: 13px;
+    font-size: 12px;
+    cursor:default;
+    outline:0 none !important; blr:expression(this.onFocus=this.blur());
+    width: 11.9%;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+
+}
+.onUse:hover{
+    color:#fff;
+    background-color:#fff;
+    text-shadow:none;
+    border:none;
+    outline:none;
+    box-shadow:none;
+    -webkit-user-select: none;
+    user-select: none;
+    height: 26px;
+    line-height: 13px;
+    font-size: 12px;
+    cursor:default;
+    outline:0 none !important; blr:expression(this.onFocus=this.blur());
+}
+.onUse:active{
+    color:#fff;
+    background-color:#fff;
+    text-shadow:none;
+    border:none;
+    outline:none;
+    box-shadow:none;
+    -webkit-user-select: none;
+    user-select: none;
+    height: 26px;
+    line-height: 13px;
+    font-size: 12px;
+    cursor:default;
+    outline:0 none !important; blr:expression(this.onFocus=this.blur());
+}
+
