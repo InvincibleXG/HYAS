@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" href="static/img/k-title-logo.ico" type="image/x-icon" />
+    <title>华匀工作室考勤系统</title>
+    <link rel="stylesheet" href="static/css/reset.css">
+    <link rel="stylesheet" href="static/css/login.css">
+    <link rel="stylesheet" href="static/css/bootstrap.css">
+</head>
+<body onLoad="pageload()">
+    <div class="container-fluid">
+        <div class="row container-fluid login-top">
+            <!--logo-->
+            <div class="row">
+                <div class="login-top-left col-lg-6 col-md-6 col-xs-6 col-md-offset-3">
+                    <div class="login-logo"></div>
+                </div>
+            </div>
+            <!--表单-->
+            <div class="center-block loginOut">
+                <form action="login" method="post" onsubmit="return check()">
+                    <div class="loginArea">
+                        <div class="loginArea-part">
+                            <p class="loginArea-title">系统登录</p>
+                        </div>
+                        <div class="loginArea-part">
+                            <input id="username" name="username" type="text" placeholder="帐号" class="set">
+                        </div>
+                        <div class="loginArea-part">
+                            <input id="password" name="password" type="password" placeholder="密码" class="set">
+                        </div>
+                        <div class="loginArea-part">
+                            <div class="checkbox">
+                                <label>
+                                    <input id="remember" type="checkbox" style="margin-top: 7px">
+                                    <span class="remPw">记住账号</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="loginArea-part">
+                            <button id="btn" type="submit" class="go" >登录</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        提示
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    账号 / 密码 不匹配!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">关闭
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel2">
+                        提示
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    请输入账号和密码!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">关闭
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+<script src="static/js/jquery-3.2.1.min.js"></script>
+<script src="static/js/bootstrap.min.js"></script>
+<script src="static/js/nps.js"></script>
+<script type="text/javascript">
+        function check()
+        {
+            var ck=document.getElementById("remember");
+            var username=document.getElementById("username");
+            var password=document.getElementById("password");
+            if (username.value.length<1 || password.value.length<1) {
+                $('#myModal2').modal('show');
+                return false;
+            }
+            var stop=false; //是否终止提交
+            jQuery.ajax({
+                url: '/user/prelogin',
+                type: 'POST',
+                async: false,
+                timeout: 1000,
+                dataType: 'json',
+                data: {
+                    'username':username.value,
+                    'password':password.value
+                },
+                success: function(data) {
+                    if (data==null || data=="null") {
+                        stop=true;
+                        $('#myModal').modal('show');
+                    }else {
+                        sessionStorage.setItem("user",JSON.stringify(data));
+                    }
+                },
+                error:function(retMsg) {
+                    console.log(retMsg);
+                }
+            });
+            if (!stop && ck.checked==true) {
+                localStorage.setItem("name", document.getElementById("username").value);
+                localStorage.setItem("pwd", document.getElementById("password").value);
+            }
+            else {
+                localStorage.removeItem("name");
+                localStorage.removeItem("pwd");
+            }
+            return !stop; //如果登陆失败则不提交表单
+        }
+        function pageload()
+        {
+            var ck=document.getElementById("remember");
+            var username=document.getElementById("username");
+            var password=document.getElementById("password");
+            var name=localStorage.getItem("name");
+            if (name!=null) {
+                ck.checked=true;
+                username.value=name;
+                password.value=localStorage.getItem("pwd");
+            }
+        }
+    </script>
+
+</body>
+</html>

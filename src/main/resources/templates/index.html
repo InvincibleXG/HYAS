@@ -1,162 +1,225 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>总部项目管理工具</title>
-    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/nps.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/login.css">
-    <link rel="stylesheet" href="css/bootstrap.css">
-</head>
-<body onLoad="pageload()">
-    <script type="text/javascript">
-        function check()
-        {
-            var ck=document.getElementById("remember");
-            var username=document.getElementById("username");
-            var password=document.getElementById("password");
-            if (username.value.length<1 || password.value.length<1) {
-                $('#myModal2').modal('show');
-                return false;
-            }
-            var stop=false; //是否终止提交
-            jQuery.ajax({
-                url: '/user/prelogin',
-                type: 'POST',
-                async: false,
-                timeout: 1000,
-                dataType: 'json',
-                data: {
-                    'username':username.value,
-                    'password':password.value,
-                    },
-                success: function(data) {
-                    if (data==null || data=="null") {
-                        stop=true;
-                        $('#myModal').modal('show');
-                    }
-                    else {
-                        sessionStorage.setItem("user",JSON.stringify(data));
-                        getAllChineseNames();
-                    }
-                },
-                error:function(retMsg) {
-                   console.log(retMsg);
-                }
-            });
-            if (!stop && ck.checked==true) {
-                localStorage.setItem("name", document.getElementById("username").value);
-                localStorage.setItem("pwd", document.getElementById("password").value);
-            }
-            else {
-                localStorage.removeItem("name");
-                localStorage.removeItem("pwd");
-            }
-            return !stop; //如果登陆失败则不提交表单
-        }
-        function pageload()
-        {
-            var ck=document.getElementById("remember");
-            var username=document.getElementById("username");
-            var password=document.getElementById("password");
-            var name=localStorage.getItem("name");
-            if (name!=null) {
-                ck.checked=true;
-                username.value=name;
-                password.value=localStorage.getItem("pwd");
-            }
-        }
-    </script>
-    <div class="container-fluid">
-        <div class="row container-fluid login-top">
-            <!--logo-->
-            <div class="row">
-                <div class="login-top-left col-lg-6 col-md-6 col-xs-6 col-md-offset-3">
-                    <div class="login-logo"></div>
-                </div>
-                <div class="col-md-3 col-lg-3 col-xs-3">
-                    <img src="img/kone.jpg" class="img-responsive" alt="Responsive image" style="    display: block;
-    padding-top: 20px;
-    max-width: 32%;
-    height: auto;
-    float: right;
-    padding-right: 20px;">
-                </div>
-            </div>
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            &times;
-                        </button>
-                        <h4 class="modal-title" id="myModalLabel">
-                            提示
-                        </h4>
-                    </div>
-                    <div class="modal-body">
-                        账号 / 密码 不匹配!
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">关闭
-                        </button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal -->
-        </div>
-            <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                &times;
-                            </button>
-                            <h4 class="modal-title" id="myModalLabel2">
-                                提示
-                            </h4>
-                        </div>
-                        <div class="modal-body">
-                            请输入账号和密码!
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">关闭
-                            </button>
-                        </div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal -->
-            </div>
-            <!--表单-->
-            <div class="center-block loginOut">
-                <form action="user/login" method="post" onsubmit="return check()">
-                    <div class="loginArea">
-                        <div class="loginArea-part">
-                            <p class="loginArea-title">系统登录</p>
-                        </div>
-                        <div class="loginArea-part">
-                            <input id="username" name="username" type="text" placeholder="帐号" class="set">
-                        </div>
-                        <div class="loginArea-part">
-                            <input id="password" name="password" type="password" placeholder="密码" class="set">
-                        </div>
-                        <div class="loginArea-part">
-                            <div class="checkbox">
-                                <label>
-                                    <input id="remember" type="checkbox" style="margin-top: 7px">
-                                    <span class="remPw">记住账号</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="loginArea-part">
-                            <button id="btn" type="submit" class="go" >登录</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
+    <title>华匀工作室考勤系统</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="static/css/bootstrap.css">
+    <link rel="stylesheet" href="static/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="static/css/reset.css">
+    <link rel="stylesheet" href="static/css/nnps.css">
+    <link rel="stylesheet" href="static/css/nav.css">
+    <link rel="stylesheet" href="static/css/iconfont.css">
+    <link rel="stylesheet" href="static/css/aside.css">
+    <link rel="stylesheet" href="static/css/nps.css">
+    <link rel="stylesheet" href="static/css/task.css">
+    <link rel="stylesheet" href="static/themes/default/easyui.css" type="text/css"/>
+    <link rel="stylesheet" href="static/themes/icon.css" type="text/css"/>
 
+</head>
+<body>
+    <script th:inline="javascript">
+        $(document).ready(function()
+        {
+            sessionStorage.setItem("user",JSON.stringify([[${user}]]));
+            $("#pg").click(function()
+            {
+                document.getElementById("right").src="group/";
+                // 二级菜单
+                $(".aside-menu>li").removeClass("onon");
+                $(".aside-dropdown>li").removeClass("onon");
+                $(this).parent().parent().addClass("onon");
+                $(this).addClass("onon");
+            });
+            $("#pa").click(function()
+            {
+                document.getElementById("right").src="agent/";
+                // 二级菜单
+                $(".aside-menu>li").removeClass("onon");
+                $(".aside-dropdown>li").removeClass("onon");
+                $(this).parent().parent().addClass("onon");
+                $(this).addClass("onon");
+            });
+            $("#ps").click(function()
+            {
+                document.getElementById("right").src="saler/";
+                // 二级菜单
+                $(".aside-menu>li").removeClass("onon");
+                $(".aside-dropdown>li").removeClass("onon");
+                $(this).parent().parent().addClass("onon");
+                $(this).addClass("onon");
+            });
+            $("#pr").click(function()
+            {
+                document.getElementById("right").src="role/";
+                // 二级菜单
+                $(".aside-menu>li").removeClass("onon");
+                $(".aside-dropdown>li").removeClass("onon");
+                $(this).parent().parent().addClass("onon");
+                $(this).addClass("onon");
+            });
+            $("#pu").click(function()
+            {
+                document.getElementById("right").src="user/";
+                // 二级菜单
+                $(".aside-menu>li").removeClass("onon");
+                $(".aside-dropdown>li").removeClass("onon");
+                $(this).parent().parent().addClass("onon");
+                $(this).addClass("onon");
+            });
+            $("#pra").click(function()
+            {
+                document.getElementById("right").src="authority/";
+                // 二级菜单
+                $(".aside-menu>li").removeClass("onon");
+                $(".aside-dropdown>li").removeClass("onon");
+                $(this).parent().parent().addClass("onon");
+                $(this).addClass("onon");
+            });
+            $("#xmtj").click(function()
+            {
+                document.getElementById("right").src="statistics/";
+                // 二级菜单
+                $(".aside-menu>li").removeClass("onon");
+                $(".aside-dropdown>li").removeClass("onon");
+                $(this).parent().parent().addClass("onon");
+                $(this).addClass("onon");
+            });
+            $("#jxtj").click(function()
+            {
+                document.getElementById("right").src="performance/";
+                // 二级菜单
+                $(".aside-menu>li").removeClass("onon");
+                $(".aside-dropdown>li").removeClass("onon");
+                $(this).parent().parent().addClass("onon");
+                $(this).addClass("onon");
+            });
+            $("#grjx").click(function()
+            {
+                document.getElementById("right").src="personmance/";
+                // 二级菜单
+                $(".aside-menu>li").removeClass("onon");
+                $(".aside-dropdown>li").removeClass("onon");
+                $(this).parent().parent().addClass("onon");
+                $(this).addClass("onon");
+            });
+            $("#gztj").click(function()
+            {
+                document.getElementById("right").src="seal/seal";
+                // 二级菜单
+                $(".aside-menu>li").removeClass("onon");
+                $(".aside-dropdown>li").removeClass("onon");
+                $(this).parent().parent().addClass("onon");
+                $(this).addClass("onon");
+            });
+            $("#logout").click(function(){
+                $.messager.confirm("确认", "Windows认证用户退出将关闭此应用程序，是否要退出登录?", function (r){
+                    if (r) {
+                        window.opener=null;
+                        window.open('','_self');
+                        window.close();
+                        setTimeout(function(){location.href="logout";},300);
+                     }
+                });
+            });
+        });
+
+    </script>
+    <style>
+        iframe{
+        height:100%;
+        width: 100%;
+        margin: 0;
+        padding:0;
+        }
+    </style>
+<nav class="navbar navbar-default navbar-fixed-top" style="background: #2167ad">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <span class="navbar-brand hidden-xs nps_logo"></span>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li style="top:10px">
+                </li>
+                <li class="dropdown" style="user-select:none;">
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color:#fff;text-shadow: none">
+                        <i class="iconfont" style="font-size: 25px;float: left;padding-top: 3px;">&#xe692</i>
+                        <span id="userid" th:text="${session.user.description}" style="margin-left:10px;font-size:16px;">用户名</span>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" style="box-shadow: none;transition: all 0s">
+                        <li><a id="roleTop" th:text="${roleName}">普通用户</a></li>
+                        <li role="separator" class="divider"></li>
+                        <!--<li><a href="user/logout" id="logout">退出登录</a></li>-->
+                        <li><a id="logout">退出登录</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
+    <div class="clear" style="clear:both;"></div>
+</nav>
+<div class="container-fluid" style="height:100%;">
+    <ul class="aside-menu hidden-xs col-lg-2 col-md-2 col-sm-2" style="float: left;padding-left: 0px;padding-right: 0px;overflow:scroll;user-select:none;">
+        <li th:if="${project}" id="pp" class="hidden-xs menu-matrixes"><i class="text-right blue-block"></i><span class="iconfont text-right aside-menu-icon">&#xe620;</span><span>项目管理</span>
+        </li>
+        <li th:if="${report}" tag="report" class="hidden-xs menu-matrixes"><i class="text-right blue-block"></i><span class="iconfont text-right aside-menu-icon">&#xe677;</span><span>报表功能</span>
+            <ul class="dropdown aside-dropdown invisible">
+                <li id="xmtj" ><span class="iconfont text-right aside-menu-icon">&#xe66e;</span><span>项目统计</span></li>
+                <li id="jxtj" ><span class="iconfont text-right aside-menu-icon">&#xe6ca;</span><span>绩效统计</span></li>
+                <li id="grjx" ><span class="iconfont text-right aside-menu-icon">&#xe607;</span><span>个人绩效</span></li>
+                <li id="gztj" ><span class="iconfont text-right aside-menu-icon">&#xe666;</span><span>盖章统计</span></li>
+                <li style="height:16px"></li>
+            </ul>
+        </li>
+        <li th:if="${seal}" id="seal" class="hidden-xs menu-matrixes"><i class="text-right blue-block"></i><span class="iconfont text-right aside-menu-icon">&#xe60f;</span><span>盖章管理</span>
+        </li>
+        <li th:if="${data}" tag="data" class="hidden-xs menu-matrixes"><i class="text-right blue-block"></i><span class="iconfont text-right aside-menu-icon">&#xe6e7;</span><span>数据管理</span>
+            <ul class="dropdown aside-dropdown invisible">
+                <li id="pg" ><span class="iconfont text-right aside-menu-icon">&#xe62f;</span><span>区域&分公司</span></li>
+                <li id="pa" ><span class="iconfont text-right aside-menu-icon">&#xe67e;</span><span>代理商</span></li>
+                <li id="ps" ><span class="iconfont text-right aside-menu-icon">&#xe673;</span><span>销售</span></li>
+                <li id="pr" ><span class="iconfont text-right aside-menu-icon">&#xe736;</span><span>角色</span></li>
+                <li id="pu" ><span class="iconfont text-right aside-menu-icon">&#xe692;</span><span>用户</span></li>
+                <li id="pra"><span class="iconfont text-right aside-menu-icon">&#xe608;</span><span>角色权限</span></li>
+                <li style="height:16px"></li>
+            </ul>
+        </li>
+    </ul>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        提示
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    您没有相应的权限!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">关闭
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <div class="ifArea">
+        <iframe id="right" scrolling="auto" style="overflow-x:hidden;" src="nps_bg.html">
+
+        </iframe>
+    </div>
+</div>
+
+<script src="static/js/jquery-3.2.1.min.js"></script>
+<script src="static/js/bootstrap.min.js"></script>
+<script src="static/js/jquery.easyui.min.js"></script>
+<script src="static/js/easyui-lang-zh_CN.js"></script>
+<script src="static/js/nps.js"></script>
 </body>
 </html>
