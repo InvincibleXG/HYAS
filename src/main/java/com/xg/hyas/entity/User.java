@@ -1,10 +1,9 @@
 package com.xg.hyas.entity;
 
-public class User
-{
+public class User {
     private String guid;
 
-    private Integer userId;
+    private String userId;
 
     private String userName;
 
@@ -30,12 +29,12 @@ public class User
         this.guid = guid == null ? null : guid.trim();
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
     }
 
     public String getUserName() {

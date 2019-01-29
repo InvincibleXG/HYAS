@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="static/css/reset.css">
     <link rel="stylesheet" href="static/css/login.css">
     <link rel="stylesheet" href="static/css/bootstrap.css">
+    <link rel="stylesheet" href="static/themes/default/easyui.css" type="text/css"/>
+    <link rel="stylesheet" href="static/themes/icon.css" type="text/css"/>
 </head>
 <body onLoad="pageload()">
     <div class="container-fluid">
@@ -48,107 +50,70 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        &times;
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">
-                        提示
-                    </h4>
-                </div>
-                <div class="modal-body">
-                    账号 / 密码 不匹配!
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">关闭
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
-    </div>
-    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        &times;
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel2">
-                        提示
-                    </h4>
-                </div>
-                <div class="modal-body">
-                    请输入账号和密码!
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">关闭
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
-    </div>
+
 <script src="static/js/jquery-3.2.1.min.js"></script>
 <script src="static/js/bootstrap.min.js"></script>
-<script src="static/js/nps.js"></script>
+<script src="static/js/jquery.easyui.min.js"></script>
+<script src="static/js/easyui-lang-zh_CN.js"></script>
+<script src="static/js/hyas.js"></script>
 <script type="text/javascript">
-        function check()
-        {
-            var ck=document.getElementById("remember");
-            var username=document.getElementById("username");
-            var password=document.getElementById("password");
-            if (username.value.length<1 || password.value.length<1) {
-                $('#myModal2').modal('show');
-                return false;
-            }
-            var stop=false; //是否终止提交
-            jQuery.ajax({
-                url: '/user/prelogin',
-                type: 'POST',
-                async: false,
-                timeout: 1000,
-                dataType: 'json',
-                data: {
-                    'username':username.value,
-                    'password':password.value
-                },
-                success: function(data) {
-                    if (data==null || data=="null") {
-                        stop=true;
-                        $('#myModal').modal('show');
-                    }else {
-                        sessionStorage.setItem("user",JSON.stringify(data));
-                    }
-                },
-                error:function(retMsg) {
-                    console.log(retMsg);
+    function check()
+    {
+        var ck=document.getElementById("remember");
+        var username=document.getElementById("username");
+        var password=document.getElementById("password");
+        if (username.value.length<1 || password.value.length<1) {
+            $.messager.alert("提示", "请输入账号密码", "error");
+            return false;
+        }
+        var stop=false; //是否终止提交
+        $.ajax({
+            url: contextPath+'/user/sign',
+            type: 'POST',
+            async: false,
+            timeout: 3000,
+            data: {
+                'userId':username.value,
+                'password':password.value
+            },
+            success: function(data) {
+                if (data=="1"){
+                    $.messager.alert("提示", "登录成功", "info", function () {
+                        location.href="index";
+                    });
+                }else{
+                    $.messager.alert("提示", data, "error");
+                    return false;
                 }
-            });
-            if (!stop && ck.checked==true) {
-                localStorage.setItem("name", document.getElementById("username").value);
-                localStorage.setItem("pwd", document.getElementById("password").value);
+            },
+            error:function(retMsg) {
+                $.messager.alert("提示", "请求超时, 请稍后再试", "error");
+                console.log(retMsg);
             }
-            else {
-                localStorage.removeItem("name");
-                localStorage.removeItem("pwd");
-            }
-            return !stop; //如果登陆失败则不提交表单
+        });
+        if (!stop && ck.checked==true) {
+            localStorage.setItem("name", document.getElementById("username").value);
+            localStorage.setItem("pwd", document.getElementById("password").value);
         }
-        function pageload()
-        {
-            var ck=document.getElementById("remember");
-            var username=document.getElementById("username");
-            var password=document.getElementById("password");
-            var name=localStorage.getItem("name");
-            if (name!=null) {
-                ck.checked=true;
-                username.value=name;
-                password.value=localStorage.getItem("pwd");
-            }
+        else {
+            localStorage.removeItem("name");
+            localStorage.removeItem("pwd");
         }
-    </script>
+        return false;
+    }
+    function pageload()
+    {
+        var ck=document.getElementById("remember");
+        var username=document.getElementById("username");
+        var password=document.getElementById("password");
+        var name=localStorage.getItem("name");
+        if (name!=null) {
+            ck.checked=true;
+            username.value=name;
+            password.value=localStorage.getItem("pwd");
+        }
+    }
+</script>
 
 </body>
 </html>

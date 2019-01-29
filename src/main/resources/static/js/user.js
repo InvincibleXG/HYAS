@@ -1,29 +1,5 @@
 function loadUser()
 {
-    //先加载role信息
-    $.ajax({
-        url: '/role/getall',
-        type: 'POST',
-        async: false,
-        timeout: 1000,
-        dataType: 'json',
-        success: function(data) {
-            var roles=data; //传过来就是object
-            $("#inrole").empty();
-            $("#roleselecta").empty();
-            $("#roleselectu").empty();
-            $("#inrole").append("<option value=''></option>");
-            for (var i in roles) {
-                $("#inrole").append("<option value='"+roles[i].guid+"'>"+roles[i].name+"</option>");
-                $("#roleselecta").append("<option value='"+roles[i].guid+"'>"+roles[i].name+"</option>");
-                $("#roleselectu").append("<option value='"+roles[i].guid+"'>"+roles[i].name+"</option>");
-                sessionStorage.setItem(roles[i].guid, roles[i].name);
-            }
-        },
-        error:function(retMsg) {
-            console.log(retMsg);
-        }
-    });
     $('#tt').datagrid(
 	{
 			    url: 'list',
@@ -58,7 +34,7 @@ function loadUser()
                              { field: 'modifier', width: '150', align: 'center', title: '修改者', formatter:function(value,row,index){ return sessionStorage.getItem(row.modifier);} },
                              { field: 'modifyDate', width: '160', align: 'center', title: '修改时间'},
                              { field: 'description', width: '150', align: 'center', title: '中文名'}
-						   ]],
+						   ]]
 			});
 }
 function doSearch()
@@ -98,7 +74,7 @@ function doSearch()
         	},
         	columns: [[
                      { field: 'guid', width: '233', align: 'center', title: '唯一编号'},
-                     { field: 'userid', width: '150', align: 'center', title: '用户名'},
+                     { field: 'userId', width: '150', align: 'center', title: '用户名'},
                      { field: 'password', width: '150', align: 'center', title: '密码'},
                      { field: 'winName', width: '150', align: 'center', title: 'windows账户'},
                      { field: 'roleGuid', width: '120', align: 'center', title: '角色类型', formatter:function(value,row,index){ return sessionStorage.getItem(row.roleGuid);} },

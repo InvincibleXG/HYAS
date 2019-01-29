@@ -1,144 +1,144 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xg.hyas.mapper.UserMapper" >
-  <resultMap id="BaseResultMap" type="com.xg.hyas.entity.User" >
-    <id column="guid" property="guid" jdbcType="VARCHAR" />
-    <result column="user_id" property="userId" jdbcType="INTEGER" />
-    <result column="user_name" property="userName" jdbcType="VARCHAR" />
-    <result column="password" property="password" jdbcType="VARCHAR" />
-    <result column="role" property="role" jdbcType="VARCHAR" />
-    <result column="email" property="email" jdbcType="VARCHAR" />
-    <result column="phone" property="phone" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
-    <result column="creator" property="creator" jdbcType="VARCHAR" />
-    <result column="is_valid" property="isValid" jdbcType="BIT" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xg.hyas.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.xg.hyas.entity.User">
+    <id column="guid" jdbcType="VARCHAR" property="guid" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="role" jdbcType="VARCHAR" property="role" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="is_valid" jdbcType="BIT" property="isValid" />
   </resultMap>
-  <sql id="Base_Column_List" >
+  <sql id="Base_Column_List">
     guid, user_id, user_name, password, role, email, phone, create_time, creator, is_valid
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from table_user
     where guid = #{guid,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from table_user
     where guid = #{guid,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.xg.hyas.entity.User" >
+  <insert id="insert" parameterType="com.xg.hyas.entity.User">
     insert into table_user (guid, user_id, user_name, 
       password, role, email, 
       phone, create_time, creator, 
       is_valid)
-    values (#{guid,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, 
+    values (#{guid,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
       #{phone,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
       #{isValid,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="com.xg.hyas.entity.User" >
+  <insert id="insertSelective" parameterType="com.xg.hyas.entity.User">
     insert into table_user
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="guid != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="guid != null">
         guid,
       </if>
-      <if test="userId != null" >
+      <if test="userId != null">
         user_id,
       </if>
-      <if test="userName != null" >
+      <if test="userName != null">
         user_name,
       </if>
-      <if test="password != null" >
+      <if test="password != null">
         password,
       </if>
-      <if test="role != null" >
+      <if test="role != null">
         role,
       </if>
-      <if test="email != null" >
+      <if test="email != null">
         email,
       </if>
-      <if test="phone != null" >
+      <if test="phone != null">
         phone,
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         create_time,
       </if>
-      <if test="creator != null" >
+      <if test="creator != null">
         creator,
       </if>
-      <if test="isValid != null" >
+      <if test="isValid != null">
         is_valid,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="guid != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="guid != null">
         #{guid,jdbcType=VARCHAR},
       </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=INTEGER},
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
       </if>
-      <if test="userName != null" >
+      <if test="userName != null">
         #{userName,jdbcType=VARCHAR},
       </if>
-      <if test="password != null" >
+      <if test="password != null">
         #{password,jdbcType=VARCHAR},
       </if>
-      <if test="role != null" >
+      <if test="role != null">
         #{role,jdbcType=VARCHAR},
       </if>
-      <if test="email != null" >
+      <if test="email != null">
         #{email,jdbcType=VARCHAR},
       </if>
-      <if test="phone != null" >
+      <if test="phone != null">
         #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         #{createTime,jdbcType=VARCHAR},
       </if>
-      <if test="creator != null" >
+      <if test="creator != null">
         #{creator,jdbcType=VARCHAR},
       </if>
-      <if test="isValid != null" >
+      <if test="isValid != null">
         #{isValid,jdbcType=BIT},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xg.hyas.entity.User" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.xg.hyas.entity.User">
     update table_user
-    <set >
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=INTEGER},
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
       </if>
-      <if test="userName != null" >
+      <if test="userName != null">
         user_name = #{userName,jdbcType=VARCHAR},
       </if>
-      <if test="password != null" >
+      <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
       </if>
-      <if test="role != null" >
+      <if test="role != null">
         role = #{role,jdbcType=VARCHAR},
       </if>
-      <if test="email != null" >
+      <if test="email != null">
         email = #{email,jdbcType=VARCHAR},
       </if>
-      <if test="phone != null" >
+      <if test="phone != null">
         phone = #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         create_time = #{createTime,jdbcType=VARCHAR},
       </if>
-      <if test="creator != null" >
+      <if test="creator != null">
         creator = #{creator,jdbcType=VARCHAR},
       </if>
-      <if test="isValid != null" >
+      <if test="isValid != null">
         is_valid = #{isValid,jdbcType=BIT},
       </if>
     </set>
     where guid = #{guid,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xg.hyas.entity.User" >
+  <update id="updateByPrimaryKey" parameterType="com.xg.hyas.entity.User">
     update table_user
-    set user_id = #{userId,jdbcType=INTEGER},
+    set user_id = #{userId,jdbcType=VARCHAR},
       user_name = #{userName,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       role = #{role,jdbcType=VARCHAR},
@@ -149,4 +149,11 @@
       is_valid = #{isValid,jdbcType=BIT}
     where guid = #{guid,jdbcType=VARCHAR}
   </update>
+
+  <select id="selectByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from table_user
+    where user_id = #{userId,jdbcType=VARCHAR} and is_valid=1
+  </select>
 </mapper>

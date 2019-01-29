@@ -2,6 +2,8 @@ package com.xg.hyas.util;
 
 import com.xg.hyas.entity.User;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -14,4 +16,9 @@ public class UserUtil
         return (User)o;
     }
 
+    public static boolean checkLogin(String input, String password)
+    {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.matches(input, password);
+    }
 }
