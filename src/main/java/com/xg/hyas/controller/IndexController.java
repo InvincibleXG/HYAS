@@ -7,6 +7,7 @@ import com.xg.hyas.util.UserUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.extern.slf4j.Slf4j;
@@ -38,12 +39,13 @@ public class IndexController
         return "logout.html";
     }
     @GetMapping("/index")
-    public ModelAndView index()
+    public ModelAndView index(@RequestParam(value = "target", defaultValue = "home")String url)
     {
         ModelAndView mav=new ModelAndView("index.html");
         User user=UserUtil.getCurrentUser();
         if (user==null) mav.setViewName("redirect:login");
         mav.addObject("user", user);
+        mav.addObject("url", url);
         return mav;
     }
 

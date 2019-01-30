@@ -56,36 +56,40 @@
     </nav>
     <div class="container-fluid" style="height:100%;">
         <ul class="aside-menu hidden-xs col-lg-2 col-md-2 col-sm-2" style="float: left;padding-left: 0px;padding-right: 0px;overflow:scroll;user-select:none;">
-            <li id="pp" class="hidden-xs menu-matrixes"><i class="text-right blue-block"></i><span class="iconfont text-right aside-menu-icon">&#xe620;</span><span>考勤管理</span>
+            <li class="hidden-xs menu-matrixes"><i class="text-right blue-block"></i><span class="iconfont text-right aside-menu-icon">&#xe620;</span><span>考勤管理</span>
                 <ul class="dropdown aside-dropdown">
-                    <li id="pg" ><span class="iconfont text-right aside-menu-icon">&#xe62f;</span><span>签到</span></li>
+                    <li id="attend" ><span class="iconfont text-right aside-menu-icon">&#xe62f;</span><span>签到</span></li>
                 </ul>
             </li>
-            <li tag="report" class="hidden-xs menu-matrixes"><i class="text-right blue-block"></i><span class="iconfont text-right aside-menu-icon">&#xe677;</span><span>报表功能</span>
+            <li class="hidden-xs menu-matrixes"><i class="text-right blue-block"></i><span class="iconfont text-right aside-menu-icon">&#xe677;</span><span>报表功能</span>
                 <ul class="dropdown aside-dropdown">
-                    <li id="xmtj" ><span class="iconfont text-right aside-menu-icon">&#xe66e;</span><span>项目统计</span></li>
+                    <li id="xmtj" ><span class="iconfont text-right aside-menu-icon">&#xe66e;</span><span>考勤统计</span></li>
                     <li id="jxtj" ><span class="iconfont text-right aside-menu-icon">&#xe6ca;</span><span>绩效统计</span></li>
                     <li id="grjx" ><span class="iconfont text-right aside-menu-icon">&#xe607;</span><span>个人绩效</span></li>
-                    <li id="gztj" ><span class="iconfont text-right aside-menu-icon">&#xe666;</span><span>盖章统计</span></li>
                 </ul>
             </li>
             </li>
-            <li tag="data" class="hidden-xs menu-matrixes"><i class="text-right blue-block"></i><span class="iconfont text-right aside-menu-icon">&#xe6e7;</span><span>数据管理</span>
+            <li class="hidden-xs menu-matrixes"><i class="text-right blue-block"></i><span class="iconfont text-right aside-menu-icon">&#xe6e7;</span><span>数据管理</span>
                 <ul class="dropdown aside-dropdown">
-                    <li id="pu" ><span class="iconfont text-right aside-menu-icon">&#xe692;</span><span>用户</span></li>
+                    <li id="userManage" ><span class="iconfont text-right aside-menu-icon">&#xe692;</span><span>用户</span></li>
                 </ul>
             </li>
         </ul>
-        <div class="ifArea">
-            <div id="cc" class="easyui-calendar" style="width:300px;height:300px;"></div>
+
+        <script src="static/js/jquery-3.2.1.min.js"></script>
+        <script src="static/js/bootstrap.min.js"></script>
+        <script src="static/js/jquery.easyui.min.js"></script>
+        <script src="static/js/easyui-lang-zh_CN.js"></script>
+        <script src="static/js/hyas.js"></script>
+
+        <div class="ifArea" th:switch="${url}">
+            <div th:case="'home'" th:insert="~{_home :: home}"></div>
+            <div th:case="'user'" th:insert="~{_user :: user}"></div>
+
         </div>
     </div>
 
-<script src="static/js/jquery-3.2.1.min.js"></script>
-<script src="static/js/bootstrap.min.js"></script>
-<script src="static/js/jquery.easyui.min.js"></script>
-<script src="static/js/easyui-lang-zh_CN.js"></script>
-<script src="static/js/hyas.js"></script>
+
 <script th:inline="javascript">
     $(document).ready(function()
     {

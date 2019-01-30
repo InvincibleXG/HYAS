@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<style>
+    tr td {
+        padding: 1px;
+    }
+    .pagination-btn-separator{
+        border:none!important;
+    }
+</style>
+<div th:fragment="user">
+    <script src="static/js/user.js"></script>
+    <script>
+        var everPost=0;
+        $(document).ready(function()
+        {
+            loadUser();
+            $("#searchBtn").click(function(){
+                doSearch();
+            });
+            $("#reloadItem").click(function(){
+                loadUser();
+            });
+            $.extend($.fn.validatebox.defaults.rules, { });
+            $("#add").dialog({
+                onOpen:function(){
+                    $('input.easyui-validatebox').validatebox('disableValidation')
+                        .focus(function () { $(this).validatebox('enableValidation'); })
+                        .blur(function () { $(this).validatebox('validate') }); //取消验证但在聚焦和失焦时验证
+                    document.getElementById("addDiv").style.display="block";
+                },
+                onClose:function(){	//关闭dialog 隐藏div
+                    document.getElementById("addDiv").style.display="none";
+                }
+            });
+            $("#update").dialog({
+                onOpen:function(){
+                    $('input.easyui-validatebox').validatebox('disableValidation')
+                        .focus(function () { $(this).validatebox('enableValidation'); })
+                        .blur(function () { $(this).validatebox('validate') }); //取消验证但在聚焦和失焦时验证
+                    document.getElementById("updateDiv").style.display="block";
+                    var row = $('#tableUser').datagrid('getSelected');
+                    $("#guid").val(row.guid);
+                    $("#userId").val(row.userId);
+                    $("#userName").val(row.userName);
+                    $("#phone").val(row.phone);
+                    $("#email").val(row.email);
+                },
+                onClose:function(){	//关闭dialog 隐藏div
+                    document.getElementById("updateDiv").style.display="none";
+                }
+            });
+            $("#addBtn").click(function(){
+                $('#add').dialog('open');
+                $('#add').window('center');
+            });
+            $("#ediBtn").click(function(){
+                var rows = $('#tableUser').datagrid('getSelections');
+                if (rows.length==0) {
+                    $.messager.alert("提示", "您还没选择要修改的数据项!", "warning");
+                    return;
+                }
+                if (rows.length>1){
+                    $.messager.alert("提示", "一次只能修改单个数据项!", "warning");
+                    return;
+                }
+                $('#update').dialog('open');
+                $('#update').window('center');
+            });
+            $("#delBtn").click(function(){
+                deleteItem();
+            });
+        });
+    </script>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height:auto;padding:0">
+        <!--中间table-->
+        <div class="table-responsive nps_table2 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div id="tb" style="padding:3px">
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td><span id="reloadItem" class="easyui-linkbutton" iconCls="icon-reload" plain="true" >刷新</span></td>
+                        <td><div class="btn-separator"></div></td>
+                    </tr>
+                </table>
+            </div>
+            <!-- datagridview 开始 -->
+            <div>
+                <table id="tableUser" class="easyui-datagrid"
+                       url="" toolbar="#tb"
+                       title="用户管理" iconCls="icon-save"
+                       rownumbers="true" pagination="true">
+                </table>
+            </div>
+            <!-- datagridview 结束 -->
+            <!-- 添加数据div 开始 -->
+            <div id="add" class="easyui-dialog" style="width:300px;" data-options="title:'添加数据项',closed:true,modal:true,closable:true,buttons:[
+            {
+                text:'提交',
+                iconCls:'icon-edit',
+                handler:function(){
+                    if (everPost==1) return false;
+                    addItem();
+                }
+            }]" >
+                <div id="addDiv" style="display:none;">
+                    <form id="useradd" method="post">
+                        <table>
+                            <tr>
+                                <th>账号</th>
+                                <td><input name="userId" class="easyui-validatebox form-control nps_select" data-options="required:true,missingMessage:'请输入账号'" /></td>
+                            </tr>
+                            <tr><th></th><td></td></tr>
+                            <tr>
+                                <th>密码</th>
+                                <td><input name="password" type="password" class="easyui-validatebox form-control nps_select" value="huayun123" data-options="required:true,missingMessage:'请输入密码'" /></td>
+                            </tr>
+                            <tr><th></th><td></td></tr>
+                            <tr>
+                                <th>角色</th>
+                                <td>
+                                    <select name="role" class="form-control nps_select">
+                                        <option value="用户">用户</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr><th></th><td></td></tr>
+                            <tr>
+                                <th>姓名</th>
+                                <td><input name="userName" class="easyui-validatebox form-control nps_select" data-options="required:true,missingMessage:'请输入姓名'" /></td>
+                            </tr>
+                            <tr><th></th><td></td></tr>
+                            <tr>
+                                <th>手机号</th>
+                                <td><input name="phone" class="easyui-validatebox form-control nps_select" /></td>
+                            </tr>
+                            <tr><th></th><td></td></tr>
+                            <tr>
+                                <th>邮箱</th>
+                                <td><input name="email" class="easyui-validatebox form-control nps_select" /></td>
+                            </tr>
+                            <tr><th></th><td></td></tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+            <!-- 添加数据div 结束 -->
+            <!-- 修改数据div 开始 -->
+            <div id="update" class="easyui-dialog" style="width:300px;" data-options="title:'修改数据项',closed:true,modal:true,closable:true,buttons:[
+            {
+                text:'提交',
+                iconCls:'icon-edit',
+                handler:function(){
+                    if (everPost==1) return false;
+                    updateItem();
+                }
+            }]" >
+                <div id="updateDiv" style="display:none;">
+                    <form id="userupdate" method="post">
+                        <table>
+                            <tr style="display: none;"><input name="guid" id="guid" type="hidden" class="form-control nps_select"></tr>
+                            <tr>
+                                <th>账号</th>
+                                <td><input name="userId" id="userId" class="easyui-validatebox form-control nps_select" data-options="required:true,missingMessage:'请输入账号'" readonly /></td>
+                            </tr>
+                            <tr><th></th><td></td></tr>
+                            <tr>
+                                <th>密码</th>
+                                <td><input name="password" type="password" class="easyui-validatebox form-control nps_select" value="" data-options="required:false" /></td>
+                            </tr>
+                            <tr><th></th><td></td></tr>
+                            <tr>
+                                <th>角色</th>
+                                <td>
+                                    <select name="role" class="form-control nps_select">
+                                        <option value="用户">用户</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr><th></th><td></td></tr>
+                            <tr>
+                                <th>姓名</th>
+                                <td><input name="userName" id="userName" class="easyui-validatebox form-control nps_select" data-options="required:true,missingMessage:'请输入姓名'" /></td>
+                            </tr>
+                            <tr><th></th><td></td></tr>
+                            <tr>
+                                <th>手机号</th>
+                                <td><input name="phone" id="phone" class="easyui-validatebox form-control nps_select" /></td>
+                            </tr>
+                            <tr><th></th><td></td></tr>
+                            <tr>
+                                <th>邮箱</th>
+                                <td><input name="email" id="email" class="easyui-validatebox form-control nps_select" /></td>
+                            </tr>
+                            <tr><th></th><td></td></tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+            <!-- 修改数据div 结束 -->
+        </div>
+        <!--底部按钮-->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 4px;margin-bottom: 4px;">
+            <div class="pull-left col-sm-3">
+                <div class="row col-sm-4">
+                    <button id="addBtn" type="button" class="btn xg_but btn-warning col-sm-10">新建</button>
+                </div>
+                <div class="row col-sm-4">
+                    <button id="ediBtn" type="button" class="btn xg_but btn-warning col-sm-10">编辑</button>
+                </div>
+                <div class="row col-sm-4">
+                    <button id="delBtn" type="button" class="btn xg_but btn-warning col-sm-10">删除</button>
+                </div>
+            </div>
+        </div>
+        <div class="clear" style="clear:both;"></div>
+    </div>
+</div>

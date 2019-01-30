@@ -15,6 +15,12 @@ $(function () {
         }
     });
 
+    $("#attend").click(function () {
+        location.href="index?target=home";
+    });
+    $("#userManage").click(function () {
+        location.href="index?target=user";
+    });
     // 回车换下一个input
     $('input.easyui-validatebox').keydown(function(event){
         if (event.keyCode == 13){

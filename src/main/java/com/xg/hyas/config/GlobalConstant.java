@@ -9,10 +9,11 @@ import javax.annotation.PostConstruct;
 public class GlobalConstant
 {
     public final static String ERROR_RETURN="意外错误发生了, 请重试或联系管理员";
+    public final static String NULL_PAGE_RETURN="{\"total\":0,\"rows\":[]}";
     @Autowired
     private ConstantBean constantBean;
 
-    private static String ADMIN_ROLE;
+    private static String ADMIN_ROLE="管理员";
 
     public static String UPLOAD_PATH;
     public static String DEFAULT_PASSWORD;
