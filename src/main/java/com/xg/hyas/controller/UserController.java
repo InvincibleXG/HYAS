@@ -99,6 +99,20 @@ public class UserController
         }
         return GlobalConstant.ERROR_RETURN;
     }
+    @PostMapping("/delete")
+    public String delete(User user)
+    {
+        try{
+            String guid=user.getGuid();
+            if (CheckUtil.isNullString(guid)){
+                return "用户编号不存在";
+            }
+            return String.valueOf(userService.delete(guid));
+        }catch (Exception e){
+            log.error(e.toString(), e);
+        }
+        return GlobalConstant.ERROR_RETURN;
+    }
 
     @Deprecated
     @PostMapping("/exit")

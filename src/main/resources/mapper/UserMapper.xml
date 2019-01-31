@@ -112,7 +112,7 @@
       <if test="userName != null">
         user_name = #{userName,jdbcType=VARCHAR},
       </if>
-      <if test="password != null">
+      <if test="password!=null and password!='' ">
         password = #{password,jdbcType=VARCHAR},
       </if>
       <if test="role != null">
@@ -162,4 +162,11 @@
     from table_user
     where is_valid=1 and guid!='abcdefghijklmnopqrstuvwxyz012345'
   </select>
+  <update id="discardByGuid">
+    update table_user
+    set
+     is_valid = 0
+    where guid = #{guid,jdbcType=VARCHAR}
+  </update>
+
 </mapper>

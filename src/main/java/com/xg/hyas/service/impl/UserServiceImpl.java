@@ -79,8 +79,11 @@ public class UserServiceImpl implements UserService
         String newPwd=record.getPassword();
         if (!CheckUtil.isNullString(newPwd)){
             record.setPassword(new BCryptPasswordEncoder().encode(newPwd));
+        }else {
+            record.setPassword(null);
         }
         record.setRole("用户");
+        record.setUserId(null);
         return userMapper.updateByPrimaryKeySelective(record);
     }
 
@@ -89,7 +92,6 @@ public class UserServiceImpl implements UserService
     {
         User current=UserUtil.getCurrentUser();
         if (current==null || !GlobalConstant.checkAdmin(current.getRole())) return -1;
-
-        return null;
+        return userMapper.discardByGuid(guid);
     }
 }

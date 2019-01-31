@@ -24,4 +24,6 @@ public interface UserMapper
     User selectByUserId(String userId);
 
     List<User> selectByParams(User params);
+
+    int discardByGuid(String guid);
 }
