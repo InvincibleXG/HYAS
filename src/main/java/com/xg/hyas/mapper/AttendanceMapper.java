@@ -18,4 +18,6 @@ public interface AttendanceMapper
     int updateByPrimaryKeySelective(Attendance record);
 
     int updateByPrimaryKey(Attendance record);
+
+    Attendance selectByUserDate(Attendance attendance);
 }

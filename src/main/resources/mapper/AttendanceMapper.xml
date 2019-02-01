@@ -125,4 +125,11 @@
       is_valid = #{isValid,jdbcType=BIT}
     where guid = #{guid,jdbcType=VARCHAR}
   </update>
+
+  <select id="selectByUserDate" parameterType="com.xg.hyas.entity.Attendance"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from table_attendance
+    where user = #{user,jdbcType=VARCHAR} and create_date = #{createDate,jdbcType=VARCHAR} and is_valid=1
+  </select>
 </mapper>
