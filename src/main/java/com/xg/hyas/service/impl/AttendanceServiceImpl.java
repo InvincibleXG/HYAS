@@ -13,7 +13,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class AttendanceServiceImpl implements AttendanceService
 {
     @Autowired
@@ -43,5 +46,16 @@ public class AttendanceServiceImpl implements AttendanceService
         attendance.setCreateDate(FormatUtil.formatDate(new Date()));
         attendance=attendanceMapper.selectByUserDate(attendance);
         return attendance;
+    }
+
+    @Override
+    public Integer rest()
+    {
+        Attendance attendance=checkToday();
+        if (attendance==null){
+            log.warn("$严重: 当天没有签到记录却能够触发下班打卡 用户为{}", UserUtil.getCurrentUser());
+        }
+        attendance.setLogoutTime(FormatUtil.formatTime(new Date()));
+        return attendanceMapper.updateByPrimaryKeySelective(attendance);
     }
 }

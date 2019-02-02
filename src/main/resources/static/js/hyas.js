@@ -60,13 +60,50 @@ $(function () {
             success: function(data) {
                 everPost=0;
                 if (data=="1"){
-                    $.messager.alert("提交结果", "签到成功!", "info");
-                    $("#attendGo").attr("disabled","true");
-                    $("#attendGo").text("已签");
+                    $.messager.alert("提交结果", "完成上班打卡!", "info");
+                    $("#attendGo").attr("disabled",true);
+                    $("#attendGo").text("打卡完毕");
+                    $("#restGo").prop("disabled",false);
                     return;
                 }
                 if (data=="null" || data=='0') {
-                    $.messager.alert("提示", "签到! 请刷新后重试! ", "error");
+                    $.messager.alert("提示", "打卡失败! 请刷新后重试! ", "error");
+                    return;
+                }
+                if (data=="-1") {
+                    $.messager.alert("提示", "登录失效!", "error");
+                    return;
+                }
+                $.messager.alert("提示", data, "error");
+            },
+            error: function (xhr) {
+                everPost=0;
+                $.messager.alert("提示", "请求超时, 请刷新后重试! ", "error");
+                console.log(xhr);
+            }
+        });
+    });
+
+    $("#restGo").click(function () {
+        if (everPost==1) {
+            $.messager.alert("提示", "请求已经发出, 请稍等...","warning");
+            return false;
+        }
+        everPost=1;
+        $.ajax({
+            url: contextPath+'/attend/rest',
+            type:'post', //HTTP请求类型
+            timeout:10000, //超时时间设置为10
+            success: function(data) {
+                everPost=0;
+                if (data=="1"){
+                    $.messager.alert("提交结果", "完成下班打卡!", "info");
+                    $("#restGo").attr("disabled",true);
+                    $("#restGo").text("打卡完毕");
+                    return;
+                }
+                if (data=="null" || data=='0') {
+                    $.messager.alert("提示", "打卡失败! 请刷新后重试! ", "error");
                     return;
                 }
                 if (data=="-1") {

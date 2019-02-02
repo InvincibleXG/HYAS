@@ -7,4 +7,7 @@ public interface AttendanceService
     Integer attend();
 
     Attendance checkToday();
+
+    Integer rest();
+
 }

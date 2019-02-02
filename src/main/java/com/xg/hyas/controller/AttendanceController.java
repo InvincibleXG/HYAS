@@ -27,7 +27,7 @@ public class AttendanceController
             Attendance attendance=attendanceService.checkToday();
             if (attendance!=null){
                 String attendTime=attendance.getLoginTime();
-                if (!CheckUtil.isNullString(attendTime)) return "您今天已经签到了";
+                if (!CheckUtil.isNullString(attendTime)) return "您今天已经上班打卡了";
             }
             return String.valueOf(attendanceService.attend());
         }catch (Exception e){
@@ -36,4 +36,22 @@ public class AttendanceController
         return GlobalConstant.ERROR_RETURN;
     }
 
+    @PostMapping("/rest")
+    public String rest()
+    {
+        try{
+            Attendance attendance=attendanceService.checkToday();
+            if (attendance!=null){
+                String attendTime=attendance.getLoginTime();
+                String restTime=attendance.getLogoutTime();
+                if (CheckUtil.isNullString(attendTime)) return "您今天还未上班打卡";
+                if (!CheckUtil.isNullString(restTime)) return "您今天已经下班打卡了";
+                return String.valueOf(attendanceService.rest());
+            }else return "您今天还未上班打卡";
+
+        }catch (Exception e){
+            log.error(e.toString(), e);
+        }
+        return GlobalConstant.ERROR_RETURN;
+    }
 }

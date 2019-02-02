@@ -57,10 +57,21 @@ public class IndexController
         {
             case "home":
                 Attendance attendance=attendanceService.checkToday();
+                boolean hasAttended=false;
+                boolean hasRested=false;
                 if (attendance!=null){
                     String attendTime=attendance.getLoginTime();
-                    if (!CheckUtil.isNullString(attendTime)) mav.addObject("hasAttended", true);
+                    String restTime=attendance.getLogoutTime();
+
+                    if (!CheckUtil.isNullString(attendTime)) {
+                        if (!CheckUtil.isNullString(restTime)){
+                            hasRested=true;
+                        }
+                        hasAttended=true;
+                    }
                 }
+                mav.addObject("hasAttended", hasAttended);
+                mav.addObject("hasRested", hasRested);
         }
         return mav;
     }

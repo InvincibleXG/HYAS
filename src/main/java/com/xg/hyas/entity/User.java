@@ -100,4 +100,9 @@ public class User {
     public void setIsValid(Boolean isValid) {
         this.isValid = isValid;
     }
+
+    public String toString()
+    {
+        return userId+" "+userName;
+    }
 }
