@@ -138,4 +138,11 @@
       create_time = #{createTime,jdbcType=VARCHAR}
     where guid = #{guid,jdbcType=VARCHAR}
   </update>
+  
+  <update id="cancelByGuid" parameterType="com.xg.hyas.entity.Work">
+      update table_work
+      set status = 0,
+      remark = #{remark,jdbcType=VARCHAR}
+      where guid = #{guid,jdbcType=VARCHAR}
+  </update>
 </mapper>

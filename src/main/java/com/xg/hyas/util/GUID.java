@@ -19,6 +19,7 @@ public class GUID
 
     public static Boolean isGUID(String str)
     {
+        if (str==null) return false;
         return str.matches(GUID_PATTERN);
     }
 }

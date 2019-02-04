@@ -1,6 +1,4 @@
-$("#reloadItem").click(function () {
-	loadMyWork();
-});
+
 function loadMyWork()
 {
     $('#tableWork').datagrid({
@@ -28,12 +26,13 @@ function loadMyWork()
         },
 		  columns: [[
 					  { field: 'guid', width: '233', align: 'center', title: '唯一编号', hidden:'true'},
-					  { field: 'userId', width: '150', align: 'center', title: '账号'},
+					  // { field: 'userId', width: '150', align: 'center', title: '账号'},
 					  { field: 'userName', width: '150', align: 'center', title: '姓名'},
-					  { field: 'role', width: '120', align: 'center', title: '角色'},
-					  { field: 'createTime', width: '160', align: 'center', title: '创建时间'},
-					  { field: 'phone', width: '150', align: 'center', title: '手机号'},
-					  { field: 'email', width: '150', align: 'center', title: '邮箱'}
+					  { field: 'startTime', width: '120', align: 'center', title: '开始时间'},
+					  { field: 'endTime', width: '160', align: 'center', title: '结束时间'},
+					  // { field: 'createTime', width: '160', align: 'center', title: '创建时间'},
+					  { field: 'status', width: '150', align: 'center', title: '状态'},
+					  { field: 'remark', width: '150', align: 'center', title: '备注'}
 				   		]]
 	});
 }
@@ -71,3 +70,65 @@ function deleteItem()
     	 }
     });
 }
+$(function () {
+    $("#reloadItem").click(function () {
+        loadMyWork();
+    });
+    $('#add').click(function () {
+        var reg = /^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2}) (\d{1,2}):(\d{1,2}):(\d{1,2})$/;
+        var start=$("#start").val();
+        var end=$("#end").val();
+        if (start==null || !start.match(reg)) {
+            $.messager.alert("提示", "接单起始时间不规范!", "warning");
+            return false;
+        }
+        if (end==null || !end.match(reg)) {
+            $.messager.alert("提示", "接单结束时间不规范!", "warning");
+            return false;
+        }
+        if (end<=start){
+            $.messager.alert("提示", "结束时间必须大于起始时间!", "warning");
+            return false;
+        }
+        if (everPost==1) {
+            $.messager.alert("提示", "请求已经发出, 请稍等...","warning");
+            return false;
+        }
+        everPost=1;
+        $.ajax({
+            url:contextPath+"/work/record",
+            type:'post',
+            data:{'start':start, 'end':end},
+            timeout:10000,
+            success:function (data) {
+                everPost=0;
+                if (data=="1"){
+                    $.messager.alert("提交结果", "录入成功!","info");
+                    $('#start').val('');
+                    $('#end').val('');
+                    $('#tableWork').datagrid('reload');
+                    return;
+                }
+                if (data=="null" || data=='0') {
+                    $.messager.alert("提示", "记录修改失败!","error");
+                    return;
+                }
+                if (data=="-1") {
+                    $.messager.alert("提示", "权限不足!", "error");
+                    return;
+                }
+                if (data=="-2") {
+                    $.messager.alert("提示", "参数错误!", "error");
+                    return;
+                }
+                $.messager.alert("提示", data, "error");
+            },
+            error:function(xhr,type,errorThrown) {
+                everPost=0;
+                console.log(xhr.status+type+errorThrown);
+            }
+        });
+    });
+
+    loadMyWork();
+});

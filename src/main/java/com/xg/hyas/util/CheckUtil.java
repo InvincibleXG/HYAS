@@ -1,7 +1,6 @@
 package com.xg.hyas.util;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -65,13 +64,13 @@ public class CheckUtil
     public static Boolean isTime(String str)
     {
         if (str==null) return false;
-        Pattern pattern=Pattern.compile(FormatUtil.YYYY_MM_DD_HH_MM_SS);
-        Matcher matcher=pattern.matcher(str);
-        if(matcher.matches()){
-            return true;
-        }else {
-            return false;
+        try {
+            Date date=FormatUtil.format2Date(str, FormatUtil.YYYY_MM_DD_HH_MM_SS);
+            if (date!=null) return true;
+        }catch (Exception e){
+            log.error("日期转换错误", e);
         }
+        return false;
     }
 
 }

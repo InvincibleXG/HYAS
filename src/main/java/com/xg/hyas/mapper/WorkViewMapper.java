@@ -2,8 +2,13 @@ package com.xg.hyas.mapper;
 
 import com.xg.hyas.vo.WorkView;
 
-public interface WorkViewMapper {
-    int insert(WorkView record);
+import org.springframework.stereotype.Repository;
 
-    int insertSelective(WorkView record);
+import java.util.List;
+
+@Repository
+public interface WorkViewMapper
+{
+    List<WorkView> selectByParams(WorkView params);
+
 }
