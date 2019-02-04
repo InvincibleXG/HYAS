@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xg.hyas.mapper.AttendanceViewMapper" >
+  <resultMap id="BaseResultMap" type="com.xg.hyas.vo.AttendanceView" >
+    <result column="guid" property="guid" jdbcType="VARCHAR" />
+    <result column="login_time" property="loginTime" jdbcType="VARCHAR" />
+    <result column="logout_time" property="logoutTime" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.xg.hyas.vo.AttendanceView" >
+    insert into attendance_view (guid, login_time, logout_time, 
+      create_date, user_id, user_name
+      )
+    values (#{guid,jdbcType=VARCHAR}, #{loginTime,jdbcType=VARCHAR}, #{logoutTime,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xg.hyas.vo.AttendanceView" >
+    insert into attendance_view
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="guid != null" >
+        guid,
+      </if>
+      <if test="loginTime != null" >
+        login_time,
+      </if>
+      <if test="logoutTime != null" >
+        logout_time,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="guid != null" >
+        #{guid,jdbcType=VARCHAR},
+      </if>
+      <if test="loginTime != null" >
+        #{loginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="logoutTime != null" >
+        #{logoutTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

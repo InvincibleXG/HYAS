@@ -1,5 +1,7 @@
 package com.xg.hyas.util;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -54,6 +56,18 @@ public class CheckUtil
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher mat = pattern.matcher(str);
         if(mat.matches()){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public static Boolean isTime(String str)
+    {
+        if (str==null) return false;
+        Pattern pattern=Pattern.compile(FormatUtil.YYYY_MM_DD_HH_MM_SS);
+        Matcher matcher=pattern.matcher(str);
+        if(matcher.matches()){
             return true;
         }else {
             return false;

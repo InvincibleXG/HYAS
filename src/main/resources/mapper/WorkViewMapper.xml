@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xg.hyas.mapper.WorkViewMapper" >
+  <resultMap id="BaseResultMap" type="com.xg.hyas.vo.WorkView" >
+    <result column="guid" property="guid" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="start_time" property="startTime" jdbcType="VARCHAR" />
+    <result column="end_time" property="endTime" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.xg.hyas.vo.WorkView" >
+    insert into work_view (guid, status, start_time, 
+      end_time, remark, create_time, 
+      user_id, user_name)
+    values (#{guid,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{startTime,jdbcType=VARCHAR}, 
+      #{endTime,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xg.hyas.vo.WorkView" >
+    insert into work_view
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="guid != null" >
+        guid,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="guid != null" >
+        #{guid,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

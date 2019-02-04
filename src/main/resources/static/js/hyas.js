@@ -18,6 +18,9 @@ $(function () {
     $("#attend").click(function () {
         location.href="index?target=home";
     });
+    $("#work").click(function () {
+        location.href="index?target=work";
+    });
     $("#userManage").click(function () {
         location.href="index?target=user";
     });
