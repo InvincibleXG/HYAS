@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,7 +35,11 @@ public class WorkServiceImpl implements WorkService
         if (current==null) return -1;
         record.setGuid(GUID.generateGUID());
         record.setCreator(current.getGuid());
-        record.setCreateTime(FormatUtil.formatTime(new Date()));
+        String createTime=FormatUtil.formatTime(new Date());
+        record.setCreateTime(createTime);
+        if (createTime.compareTo(record.getStartTime())<0) record.setStatus(1);
+        else if (createTime.compareTo(record.getEndTime())>0) record.setStatus(3);
+        else record.setStatus(2);
         return workMapper.insertSelective(record);
     }
 
@@ -50,4 +55,15 @@ public class WorkServiceImpl implements WorkService
     {
         return workMapper.cancelByGuid(record);
     }
+
+    @Override
+    public void changeYesterdayStatus(String yesterdayDate)
+    {
+        String startTime=yesterdayDate+" 00:00:00";
+        String endTime=yesterdayDate+" 23:59:59";
+        int res=workMapper.changeStatusYesterday(startTime, endTime);
+        if (res>0) log.info("将{}条记录设置为已完成", res);
+    }
+
+
 }

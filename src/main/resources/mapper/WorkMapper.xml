@@ -145,4 +145,11 @@
       remark = #{remark,jdbcType=VARCHAR}
       where guid = #{guid,jdbcType=VARCHAR}
   </update>
+  <update id="changeStatusYesterday">
+    update table_work
+      set status = 3
+     where
+      start_time &gt;= #{startTime,jdbcType=VARCHAR} and end_time &lt;= #{endTime,jdbcType=VARCHAR}
+      and (status!=0 and status!=3)
+  </update>
 </mapper>

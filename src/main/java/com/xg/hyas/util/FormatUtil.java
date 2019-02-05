@@ -89,4 +89,17 @@ public class FormatUtil
     {
         return decimalFormat.format(numbers);
     }
+
+    public static String workStatus(Integer status)
+    {
+        if (status==null) return "";
+        switch (status)
+        {
+            case 0: return "已取消";
+            case 1: return "未开始";
+            case 2: return "进行中";
+            case 3: return "已完成";
+            default:return "无状态";
+        }
+    }
 }

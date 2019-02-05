@@ -2,6 +2,7 @@ package com.xg.hyas.mapper;
 
 import com.xg.hyas.entity.Work;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -21,4 +22,5 @@ public interface WorkMapper
 
     int cancelByGuid(Work record);
 
+    int changeStatusYesterday(@Param("startTime")String start, @Param("endTime")String end);
 }

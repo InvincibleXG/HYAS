@@ -11,4 +11,6 @@ public interface WorkService
     PageInfo<WorkView> getWorkViewsByParams(Integer page, Integer rows, WorkView params);
 
     Integer cancel(Work record);
+
+    void changeYesterdayStatus(String yesterdayDate);
 }

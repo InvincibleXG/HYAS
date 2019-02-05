@@ -7,6 +7,7 @@ import com.xg.hyas.entity.User;
 import com.xg.hyas.entity.Work;
 import com.xg.hyas.service.WorkService;
 import com.xg.hyas.util.CheckUtil;
+import com.xg.hyas.util.FormatUtil;
 import com.xg.hyas.util.GUID;
 import com.xg.hyas.util.UserUtil;
 import com.xg.hyas.vo.WorkView;
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -23,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class WorkController
 {
+    private static String yesterdayDate=null; //存储昨天的日期 每次查询时检查是否改变 改变就更新昨天的记录状态
     @Autowired
     private WorkService workService;
 
@@ -49,6 +54,19 @@ public class WorkController
     public String list(@RequestParam("page")Integer page, @RequestParam("rows")Integer rows, WorkView params)
     {
         try{
+            Calendar calendar=Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+            Calendar yesterday= (Calendar) calendar.clone();
+            yesterday.add(Calendar.DATE, -1);
+            String yesterdayDateTemp=FormatUtil.formatDate(yesterday.getTime());
+            if (yesterdayDate==null || !yesterdayDate.equals(yesterdayDateTemp)){
+                yesterdayDate=yesterdayDateTemp;
+                workService.changeYesterdayStatus(yesterdayDate); // 将昨天的接单状态全部置为已完成
+            }
+            params.setStartTime(FormatUtil.formatTime(calendar.getTime()));
             StringBuilder sb=new StringBuilder( "{\"total\":");
             ObjectMapper jsonMapper=new ObjectMapper();
             PageInfo<WorkView> pageInfo=workService.getWorkViewsByParams(page, rows, params);
