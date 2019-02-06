@@ -83,6 +83,8 @@
         <div class="ifArea" th:switch="${url}">
             <div th:case="'home'" th:insert="~{_home :: home}"></div>
             <div th:case="'work'" th:insert="~{_work :: work}"></div>
+            <div th:case="'attendStatistic'" th:insert="~{_attend-statistic :: attend-statistic}"></div>
+            <div th:case="'workStatistic'" th:insert="~{_work-statistic :: work-statistic}"></div>
             <div th:case="'user'" th:insert="~{_user :: user}"></div>
 
         </div>

@@ -9,55 +9,27 @@
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
   </resultMap>
-  <insert id="insert" parameterType="com.xg.hyas.vo.AttendanceView" >
-    insert into attendance_view (guid, login_time, logout_time, 
+  <sql id="Base_Column_List">
+    guid, login_time, logout_time,
       create_date, user_id, user_name
-      )
-    values (#{guid,jdbcType=VARCHAR}, #{loginTime,jdbcType=VARCHAR}, #{logoutTime,jdbcType=VARCHAR}, 
-      #{createDate,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.xg.hyas.vo.AttendanceView" >
-    insert into attendance_view
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="guid != null" >
-        guid,
-      </if>
-      <if test="loginTime != null" >
-        login_time,
-      </if>
-      <if test="logoutTime != null" >
-        logout_time,
-      </if>
-      <if test="createDate != null" >
-        create_date,
-      </if>
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="userName != null" >
-        user_name,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="guid != null" >
-        #{guid,jdbcType=VARCHAR},
-      </if>
-      <if test="loginTime != null" >
-        #{loginTime,jdbcType=VARCHAR},
-      </if>
-      <if test="logoutTime != null" >
-        #{logoutTime,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null" >
-        #{createDate,jdbcType=VARCHAR},
-      </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=VARCHAR},
-      </if>
-      <if test="userName != null" >
-        #{userName,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="com.xg.hyas.vo.AttendanceView">
+    select
+    <include refid="Base_Column_List"></include>
+    from attendance_view
+    where 1=1
+    <if test="userId!=null">
+      and user_id = #{userId,jdbcType=VARCHAR}
+    </if>
+    <if test="userName!=null">
+      and user_name LIKE '%${userName}%'
+    </if>
+    <if test="loginTime!=null and loginTime!='' ">
+      and create_date &gt;= #{loginTime,jdbcType=VARCHAR}
+    </if>
+    <if test="logoutTime!=null and logoutTime!='' ">
+      and create_date &lt;= #{logoutTime,jdbcType=VARCHAR}
+    </if>
+    order by user_id asc, login_time desc
+  </select>
 </mapper>

@@ -28,11 +28,11 @@ function loadMyWork()
 					  { field: 'guid', width: '233', align: 'center', title: '唯一编号', hidden:'true'},
 					  // { field: 'userId', width: '150', align: 'center', title: '账号'},
 					  { field: 'userName', width: '150', align: 'center', title: '姓名'},
-					  { field: 'startTime', width: '120', align: 'center', title: '开始时间'},
-					  { field: 'endTime', width: '160', align: 'center', title: '结束时间'},
+					  { field: 'startTime', width: '200', align: 'center', title: '开始时间'},
+					  { field: 'endTime', width: '200', align: 'center', title: '结束时间'},
 					  // { field: 'createTime', width: '160', align: 'center', title: '创建时间'},
 					  { field: 'status', width: '150', align: 'center', title: '状态', formatter:function(value,row,index){ if (row.status!=0)return "正常"; else return "取消";}},
-					  { field: 'remark', width: '150', align: 'center', title: '备注'}
+					  { field: 'remark', width: '250', align: 'center', title: '备注'}
 				   		]]
 	});
 }

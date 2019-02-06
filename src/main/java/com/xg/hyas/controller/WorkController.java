@@ -54,6 +54,8 @@ public class WorkController
     public String list(@RequestParam("page")Integer page, @RequestParam("rows")Integer rows, WorkView params)
     {
         try{
+            User current=UserUtil.getCurrentUser();
+            if (current==null) return GlobalConstant.NULL_PAGE_RETURN;
             Calendar calendar=Calendar.getInstance();
             calendar.set(Calendar.HOUR_OF_DAY, 0);
             calendar.set(Calendar.MINUTE, 0);
@@ -67,6 +69,7 @@ public class WorkController
                 workService.changeYesterdayStatus(yesterdayDate); // 将昨天的接单状态全部置为已完成
             }
             params.setStartTime(FormatUtil.formatTime(calendar.getTime()));
+            params.setUserId(current.getUserId()); //只能看自己的哦
             StringBuilder sb=new StringBuilder( "{\"total\":");
             ObjectMapper jsonMapper=new ObjectMapper();
             PageInfo<WorkView> pageInfo=workService.getWorkViewsByParams(page, rows, params);

@@ -24,6 +24,12 @@ $(function () {
     $("#userManage").click(function () {
         location.href="index?target=user";
     });
+    $("#attendReport").click(function () {
+        location.href="index?target=attendStatistic";
+    });
+    $("#workReport").click(function () {
+        location.href="index?target=workStatistic";
+    });
     // 回车换下一个input
     $('input.easyui-validatebox').keydown(function(event){
         if (event.keyCode == 13){

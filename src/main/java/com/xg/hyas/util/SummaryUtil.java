@@ -3,10 +3,24 @@ package com.xg.hyas.util;
 import com.xg.hyas.vo.AttendanceView;
 import com.xg.hyas.vo.WorkView;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.streaming.SXSSFCell;
+import org.apache.poi.xssf.streaming.SXSSFRow;
+import org.apache.poi.xssf.streaming.SXSSFSheet;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+
+import java.io.IOException;
+import java.io.OutputStream;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -68,5 +82,99 @@ public class SummaryUtil
             }
         }
         return total;
+    }
+
+    public static void attendanceReport(OutputStream outputStream, Map<AttendanceView,List<AttendanceView>> attendanceViewListMap) throws IOException
+    {
+        SXSSFWorkbook wb = new SXSSFWorkbook();
+        try {
+            SXSSFSheet sheet = wb.createSheet("考勤统计报表");
+            sheet.setDefaultRowHeight((short) (2 * 147));
+            CellStyle cellStyle = wb.createCellStyle();
+            cellStyle.setAlignment(HorizontalAlignment.CENTER);
+            XSSFFont font = (XSSFFont) wb.createFont();
+            font.setFontName("宋体");
+            font.setBold(true);
+            cellStyle.setFont(font);
+            int rowCnt=0;
+            int colCnt=0;
+            SXSSFRow row = sheet.createRow(rowCnt++);
+            row.setRowStyle(cellStyle);
+            SXSSFCell cell = row.createCell(colCnt++);
+            cell.setCellStyle(cellStyle);
+            cell.setCellValue("账号");
+            cell = row.createCell(colCnt++);
+            cell.setCellStyle(cellStyle);
+            cell.setCellValue("姓名");
+            cell = row.createCell(colCnt++);
+            cell.setCellStyle(cellStyle);
+            cell.setCellValue("上班时间");
+            cell = row.createCell(colCnt++);
+            cell.setCellStyle(cellStyle);
+            cell.setCellValue("下班时间");
+            cell = row.createCell(colCnt++);
+            cell.setCellStyle(cellStyle);
+            cell.setCellValue("总计考勤时长(h)");
+            int columnLen=row.getPhysicalNumberOfCells();
+            for (int i=0; i<columnLen; i++){
+                sheet.setColumnWidth(i, 6000);
+            }
+            for (Map.Entry<AttendanceView, List<AttendanceView>> entry:attendanceViewListMap.entrySet()){
+                AttendanceView key=entry.getKey();
+                String id=key.getUserId();
+                String name=key.getUserName();
+                List<AttendanceView> attendanceViewList=entry.getValue();
+                double totalHours=totalAttendanceHours(attendanceViewList); //获取总时长
+                int rows=attendanceViewList.size();
+                int startRow=rowCnt;
+                int endRow=rows+startRow-1;
+                for (AttendanceView attendanceView:attendanceViewList) {
+                    row = sheet.getRow(rowCnt);
+                    if (row == null) row = sheet.createRow(rowCnt);
+                    cell=row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                    cell.setCellValue(attendanceView.getLoginTime());
+                    cell=row.getCell(3, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                    cell.setCellValue(attendanceView.getLogoutTime());
+                    rowCnt++;
+                }
+                // 合并账号 姓名 总计上班时长 并写入第一个单元格
+                if (endRow>startRow) {
+                    CellRangeAddress idRange = new CellRangeAddress(startRow, endRow, 0, 0);
+                    sheet.addMergedRegion(idRange);
+                    CellRangeAddress nameRange = new CellRangeAddress(startRow, endRow, 1, 1);
+                    sheet.addMergedRegion(nameRange);
+                    CellRangeAddress totalRange = new CellRangeAddress(startRow, endRow, 4, 4);
+                    sheet.addMergedRegion(totalRange);
+                }
+                Row rowTemp=sheet.getRow(startRow);
+                Cell idCell=rowTemp.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                idCell.setCellValue(id);
+                Cell nameCell=rowTemp.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                nameCell.setCellValue(name);
+                Cell totalCell=rowTemp.getCell(4, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                totalCell.setCellValue(totalHours);
+            }
+            wb.write(outputStream);
+        } catch (Exception e) {
+            dealWithClientAbort(e);
+        }finally {
+            wb.close();
+        }
+    }
+
+    public static void dealWithClientAbort(Exception e)
+    {
+        Throwable t=e.getCause();
+        String causeStr=e.getMessage();
+        if (t!=null) {
+            while (t.getCause() != null) {
+                t = t.getCause();
+            }
+            causeStr = t.getMessage();
+        }else{
+            t=e;
+        }
+        if (causeStr!=null && (causeStr.contains("关闭了一个现有的连接") || causeStr.contains("软件中止了一个已建立的连接") || causeStr.contains("ClientAbort"))) return;
+        log.error(t.toString(), t);
     }
 }

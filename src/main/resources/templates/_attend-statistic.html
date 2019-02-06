@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:fragment="attend-statistic">
+    <script src="static/js/attend.js"></script>
+    <div style="margin: auto; display: block;">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 8px;margin-bottom: 4px;">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-left form-group nps_form-group">
+                    <label class="col-sm-3 control-label" style="padding-top: 7px;">始于:</label>
+                    <div class="col-sm-6 nps_input">
+                        <input id="startDate" class="form-control nps_form-control" autocomplete="off" type="date"/>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-left form-group nps_form-group">
+                    <label class="col-sm-3 control-label" style="padding-top: 7px;">止于:</label>
+                    <div class="col-sm-6 nps_input">
+                        <input id="endDate" class="form-control nps_form-control" autocomplete="off" type="date"/>
+                    </div>
+                </div>
+                <div class="pull-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    <button id="report" type="button" class="btn btn-success pull-right xg_but" style="width:100%" >导出</button>
+                </div>
+                <div class="pull-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    <button id="search" type="button" class="btn btn-warning xg_but pull-right" style="width:100%">查询</button>
+                </div>
+            </div>
+
+        </div>
+        <!-- table -->
+        <div class="table-responsive nps_table2 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div id="tb" style="padding:3px">
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td><span id="reloadItem" class="easyui-linkbutton" iconCls="icon-reload" plain="true" >刷新</span></td>
+                        <td><div class="btn-separator"></div></td>
+                    </tr>
+                </table>
+            </div>
+            <!-- datagridview 开始 -->
+            <div>
+                <table id="tableAttendance" class="easyui-datagrid"
+                       url="" toolbar="#tb"
+                       title="考勤统计" iconCls="icon-save"
+                       rownumbers="true" pagination="true">
+                </table>
+            </div>
+            <!-- datagridview 结束 -->
+        </div>
+    </div>
+</div>
