@@ -1,12 +1,12 @@
 
-function loadMyAttend()
+function loadPerformance()
 {
-    $('#tableAttendance').datagrid({
-		url: contextPath+'/attend/statistics',
+    $('#tablePerformance').datagrid({
+		url: contextPath+'/work/statistics',
 		title: '考勤统计',
         queryParams:{
-            'loginTime': $("#startDate").val(),
-            'logoutTime':$("#endDate").val()
+            'startTime': $("#startDate").val(),
+            'endTime':$("#endDate").val()
         },
 		pagination: true,
 		singleSelect: true,
@@ -14,7 +14,7 @@ function loadMyAttend()
 		pageSize: 25,
 		pageList: [25, 50, 100],
 		nowrap: true,
-		// fitColumns: true,
+		fitColumns: true,
 		iconCls: 'icon-view',
 		loadMsg: "正在努力加载数据，请稍后...",
 		onLoadSuccess: function (data) {
@@ -29,23 +29,26 @@ function loadMyAttend()
             }
         },
 		  columns: [[
-					  { field: 'userId', width: '150', align: 'center', title: '账号'},
-					  { field: 'userName', width: '150', align: 'center', title: '姓名'},
-					  { field: 'loginTime', width: '200', align: 'center', title: '上班时间'},
-					  { field: 'logoutTime', width: '200', align: 'center', title: '结束时间'}
+						  { field: 'userId', width: '150', align: 'center', title: '账号'},
+						  { field: 'userName', width: '150', align: 'center', title: '姓名'},
+						  { field: 'startTime', width: '200', align: 'center', title: '开始时间'},
+						  { field: 'endTime', width: '200', align: 'center', title: '结束时间'},
+						  { field: 'createTime', width: '160', align: 'center', title: '创建时间'},
+						  { field: 'status', width: '150', align: 'center', title: '状态', formatter:function(value,row,index){ if (row.status!=0)return "正常"; else return "取消";}},
+						  { field: 'remark', width: '250', align: 'center', title: '备注'}
 				   		]]
 	});
 }
 $(function () {
     $("#reloadItem").click(function () {
-        loadMyAttend();
+        loadPerformance();
     });
     $("#search").click(function () {
-        loadMyAttend();
+        loadPerformance();
     });
     $("#report").click(function () {
-        window.location.href="./attend/report?loginTime="+$("#startDate").val()+"&logoutTime="+$("#endDate").val();
+        window.location.href="./work/report?startTime="+$("#startDate").val()+"&endTime="+$("#endDate").val();
     });
 
-    loadMyAttend();
+    loadPerformance();
 });

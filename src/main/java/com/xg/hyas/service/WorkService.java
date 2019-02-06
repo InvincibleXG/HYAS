@@ -4,6 +4,9 @@ import com.github.pagehelper.PageInfo;
 import com.xg.hyas.entity.Work;
 import com.xg.hyas.vo.WorkView;
 
+import java.util.List;
+import java.util.Map;
+
 public interface WorkService
 {
     Integer add(Work record);
@@ -13,4 +16,6 @@ public interface WorkService
     Integer cancel(Work record);
 
     void changeYesterdayStatus(String yesterdayDate);
+
+    Map<WorkView, List<WorkView>> getMapByParams(WorkView params);
 }

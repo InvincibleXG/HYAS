@@ -60,7 +60,7 @@ public class SummaryUtil
     }
 
     /**
-     * 计算列表中所有的接单总计小时数
+     * 计算列表中所有的接单总计小时数  取消的订单不会统计时长
      * @param workViewList
      * @return
      */
@@ -69,7 +69,7 @@ public class SummaryUtil
         double total=0;
         for (WorkView workView:workViewList){
             Integer status=workView.getStatus();
-            if (status!=1) continue;
+            if (status==0) continue;
             String start=workView.getStartTime();
             String end=workView.getEndTime();
             try {
@@ -84,6 +84,12 @@ public class SummaryUtil
         return total;
     }
 
+    /**
+     *  导出考勤统计
+     * @param outputStream
+     * @param attendanceViewListMap
+     * @throws IOException
+     */
     public static void attendanceReport(OutputStream outputStream, Map<AttendanceView,List<AttendanceView>> attendanceViewListMap) throws IOException
     {
         SXSSFWorkbook wb = new SXSSFWorkbook();
@@ -162,7 +168,106 @@ public class SummaryUtil
         }
     }
 
-    public static void dealWithClientAbort(Exception e)
+    /**
+     *  导出接单统计
+     * @param outputStream
+     * @param workViewListMap
+     * @throws IOException
+     */
+    public static void workReport(OutputStream outputStream, Map<WorkView,List<WorkView>> workViewListMap) throws IOException
+    {
+        SXSSFWorkbook wb = new SXSSFWorkbook();
+        try {
+            SXSSFSheet sheet = wb.createSheet("绩效统计报表");
+            sheet.setDefaultRowHeight((short) (2 * 147));
+            CellStyle cellStyle = wb.createCellStyle();
+            cellStyle.setAlignment(HorizontalAlignment.CENTER);
+            XSSFFont font = (XSSFFont) wb.createFont();
+            font.setFontName("宋体");
+            font.setBold(true);
+            cellStyle.setFont(font);
+            int rowCnt=0;
+            int colCnt=0;
+            SXSSFRow row = sheet.createRow(rowCnt++);
+            row.setRowStyle(cellStyle);
+            SXSSFCell cell = row.createCell(colCnt++);
+            cell.setCellStyle(cellStyle);
+            cell.setCellValue("账号");
+            cell = row.createCell(colCnt++);
+            cell.setCellStyle(cellStyle);
+            cell.setCellValue("姓名");
+            cell = row.createCell(colCnt++);
+            cell.setCellStyle(cellStyle);
+            cell.setCellValue("记录日期");
+            cell = row.createCell(colCnt++);
+            cell.setCellStyle(cellStyle);
+            cell.setCellValue("接单起始时间");
+            cell = row.createCell(colCnt++);
+            cell.setCellStyle(cellStyle);
+            cell.setCellValue("接单结束时间");
+            cell = row.createCell(colCnt++);
+            cell.setCellStyle(cellStyle);
+            cell.setCellValue("总计接单时长(h)");
+            cell = row.createCell(colCnt++);
+            cell.setCellStyle(cellStyle);
+            cell.setCellValue("订单状态");
+            cell = row.createCell(colCnt++);
+            cell.setCellStyle(cellStyle);
+            cell.setCellValue("取消备注");
+            int columnLen=row.getPhysicalNumberOfCells();
+            for (int i=0; i<columnLen; i++){
+                sheet.setColumnWidth(i, 6000);
+            }
+            for (Map.Entry<WorkView, List<WorkView>> entry:workViewListMap.entrySet()){
+                WorkView key=entry.getKey();
+                String id=key.getUserId();
+                String name=key.getUserName();
+                List<WorkView> workViewList=entry.getValue();
+                double totalHours=totalWorkHours(workViewList); //获取总时长
+                int rows=workViewList.size();
+                int startRow=rowCnt;
+                int endRow=rows+startRow-1;
+                for (WorkView workView:workViewList) {
+                    row = sheet.getRow(rowCnt);
+                    if (row == null) row = sheet.createRow(rowCnt);
+                    cell=row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                    cell.setCellValue(workView.getCreateTime().substring(0, 10));
+                    cell=row.getCell(3, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                    cell.setCellValue(workView.getStartTime());
+                    cell=row.getCell(4, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                    cell.setCellValue(workView.getEndTime());
+                    cell=row.getCell(6, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                    cell.setCellValue(FormatUtil.workStatus(workView.getStatus()));
+                    cell=row.getCell(7, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                    cell.setCellValue(workView.getRemark());
+                    rowCnt++;
+                }
+                // 合并账号 姓名 总计接单时长 并写入第一个单元格
+                if (endRow>startRow) {
+                    CellRangeAddress idRange = new CellRangeAddress(startRow, endRow, 0, 0);
+                    sheet.addMergedRegion(idRange);
+                    CellRangeAddress nameRange = new CellRangeAddress(startRow, endRow, 1, 1);
+                    sheet.addMergedRegion(nameRange);
+                    CellRangeAddress totalRange = new CellRangeAddress(startRow, endRow, 5, 5);
+                    sheet.addMergedRegion(totalRange);
+                }
+                Row rowTemp=sheet.getRow(startRow);
+                Cell idCell=rowTemp.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                idCell.setCellValue(id);
+                Cell nameCell=rowTemp.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                nameCell.setCellValue(name);
+                Cell totalCell=rowTemp.getCell(5, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                totalCell.setCellValue(totalHours);
+            }
+            wb.write(outputStream);
+        } catch (Exception e) {
+            dealWithClientAbort(e);
+        }finally {
+            wb.close();
+        }
+    }
+
+    protected static void dealWithClientAbort(Exception e)
     {
         Throwable t=e.getCause();
         String causeStr=e.getMessage();

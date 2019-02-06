@@ -34,5 +34,6 @@
     <if test="endTime!=null and endTime!='' ">
       and end_time &lt;= #{endTime,jdbcType=VARCHAR}
     </if>
+    order by user_id asc, create_time desc
   </select>
 </mapper>
