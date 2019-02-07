@@ -1,5 +1,6 @@
 package com.xg.hyas.controller;
 
+import com.xg.hyas.config.GlobalConstant;
 import com.xg.hyas.entity.Attendance;
 import com.xg.hyas.entity.User;
 import com.xg.hyas.service.AttendanceService;
@@ -45,13 +46,23 @@ public class IndexController
         log.info("{} 已注销", user.getUserId());
         return "logout.html";
     }
+    @GetMapping("/notAuthorized")
+    public String notAuthorized()
+    {
+        return "401.html";
+    }
     @GetMapping("/index")
     public ModelAndView index(@RequestParam(value = "target", defaultValue = "home")String url)
     {
         ModelAndView mav=new ModelAndView("index.html");
         User user=UserUtil.getCurrentUser();
-        if (user==null) mav.setViewName("redirect:login");
+        if (user==null) {
+            mav.setViewName("redirect:login");
+            return mav;
+        }
         mav.addObject("user", user);
+        boolean isAdmin= GlobalConstant.checkAdmin(user.getRole());
+        mav.addObject("admin", isAdmin);
         mav.addObject("url", url);
         switch (url)
         {
@@ -72,6 +83,14 @@ public class IndexController
                 }
                 mav.addObject("hasAttended", hasAttended);
                 mav.addObject("hasRested", hasRested);
+                break;
+            case "work": break;
+            case "attendanceStatistic": if (!isAdmin) mav.setViewName("redirect:notAuthorized");
+                break;
+            case "workStatistic": if (!isAdmin) mav.setViewName("redirect:notAuthorized");
+                break;
+            case "user": if (!isAdmin) mav.setViewName("redirect:notAuthorized");
+                break;
         }
         return mav;
     }

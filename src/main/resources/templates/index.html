@@ -61,13 +61,13 @@
                     <li id="work" ><span class="iconfont text-right aside-menu-icon">&#xe6ca;</span><span>接单时间</span></li>
                 </ul>
             </li>
-            <li class="hidden-xs menu-matrixes"><i class="text-right blue-block"></i><span class="iconfont text-right aside-menu-icon">&#xe677;</span><span>报表功能</span>
+            <li th:if="${admin}" class="hidden-xs menu-matrixes"><i class="text-right blue-block"></i><span class="iconfont text-right aside-menu-icon">&#xe677;</span><span>报表功能</span>
                 <ul class="dropdown aside-dropdown">
                     <li id="attendReport" ><span class="iconfont text-right aside-menu-icon">&#xe66e;</span><span>考勤统计</span></li>
                     <li id="workReport" ><span class="iconfont text-right aside-menu-icon">&#xe607;</span><span>绩效统计</span></li>
                 </ul>
             </li>
-            <li class="hidden-xs menu-matrixes"><i class="text-right blue-block"></i><span class="iconfont text-right aside-menu-icon">&#xe6e7;</span><span>数据管理</span>
+            <li th:if="${admin}" class="hidden-xs menu-matrixes"><i class="text-right blue-block"></i><span class="iconfont text-right aside-menu-icon">&#xe6e7;</span><span>数据管理</span>
                 <ul class="dropdown aside-dropdown">
                     <li id="userManage" ><span class="iconfont text-right aside-menu-icon">&#xe692;</span><span>用户管理</span></li>
                 </ul>
