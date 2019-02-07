@@ -44,8 +44,8 @@ public class SummaryUtil
                 if (endDate==null){
                     Calendar endCalendar=Calendar.getInstance();
                     endCalendar.setTime(startDate);
-                    endCalendar.set(Calendar.HOUR_OF_DAY, 17);
-                    endCalendar.set(Calendar.MINUTE, 0);
+                    endCalendar.set(Calendar.HOUR_OF_DAY, 23);
+                    endCalendar.set(Calendar.MINUTE, 59);
                     endCalendar.set(Calendar.SECOND, 0);
                     endCalendar.set(Calendar.MILLISECOND, 0);
                     endDate=endCalendar.getTime();
@@ -68,8 +68,8 @@ public class SummaryUtil
     {
         double total=0;
         for (WorkView workView:workViewList){
-            Integer status=workView.getStatus();
-            if (status==0) continue;
+//            Integer status=workView.getStatus();
+//            if (status==0) continue;
             String start=workView.getStartTime();
             String end=workView.getEndTime();
             try {

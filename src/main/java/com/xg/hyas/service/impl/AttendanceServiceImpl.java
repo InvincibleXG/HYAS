@@ -103,6 +103,7 @@ public class AttendanceServiceImpl implements AttendanceService
                 }else{ //不是同一用户 变更当前的key 新增进map
                     AttendanceView key=new AttendanceView();
                     key.setUserId(tempId);
+                    userId=tempId;
                     key.setUserName(attendanceView.getUserName());
                     List<AttendanceView> value=new ArrayList<>();
                     value.add(attendanceView);

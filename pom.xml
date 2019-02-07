@@ -13,6 +13,7 @@
     <artifactId>hyas</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>hyas</name>
+    <packaging>war</packaging>
     <description>HuaYunAttendanceSystem</description>
 
     <properties>
@@ -80,6 +81,7 @@
     </dependencies>
 
     <build>
+        <finalName>HYAS</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

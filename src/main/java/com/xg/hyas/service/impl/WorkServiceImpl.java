@@ -57,6 +57,8 @@ public class WorkServiceImpl implements WorkService
     @Override
     public Integer cancel(Work record)
     {
+        String remark=record.getRemark();
+        record.setRemark(remark+" 记录于"+FormatUtil.formatTime(new Date()));
         return workMapper.cancelByGuid(record);
     }
 
@@ -95,6 +97,7 @@ public class WorkServiceImpl implements WorkService
                 }else{ //不是同一用户 变更当前的key 新增进map
                     WorkView key=new WorkView();
                     key.setUserId(tempId);
+                    userId=tempId;
                     key.setUserName(workView.getUserName());
                     List<WorkView> value=new ArrayList<>();
                     value.add(workView);
